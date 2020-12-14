@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package id;
+import "ret.proto";
+import "errmsg.proto";
+
+option go_package="github.com/qsock/qim/lib/proto/id";
+
+service Id {
+  rpc Ping (ret.NoArgs) returns (ret.NoArgs) {}
+
+  rpc RegistKey (RegistKeyReq) returns (ret.EmptyResp) {}
+  rpc SnowflakeIdToTime (SnowflakeIdToTimeReq) returns (SnowflakeIdToTimeResp) {}
+  rpc GenSnowflakeId(GenSnowflakeIdReq) returns (GenSnowflakeIdResp) {}
+  rpc GenDbId(GenDbIdReq) returns (GenDbIdResp) {}
+}
+
+message KeyItem {
+  string key=1;
+  int64 offset=2;
+  int32 size=3;
+}
+
+// 注册一个key
+message RegistKeyReq {
+  repeated KeyItem keys = 1;
+}
+
+message GenSnowflakeIdReq {
+}
+
+message GenSnowflakeIdResp {
+  errmsg.ErrMsg err=1;
+  int64 id=2;
+}
+
+message GenDbIdReq {
+  string key=1;
+}
+
+message GenDbIdResp {
+  errmsg.ErrMsg err=1;
+  int64 id=2;
+}
+
+message SnowflakeIdToTimeReq {
+  int64 id=1;
+}
+
+message SnowflakeIdToTimeResp {
+  errmsg.ErrMsg err=1;
+  int64 unix_time=2;
+}

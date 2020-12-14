@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package ws;
+import "ret.proto";
+//import "stream.proto";
+
+option go_package="github.com/qsock/qim/lib/proto/ws";
+
+// websocket server
+service Ws {
+  rpc Ping (ret.NoArgs) returns (ret.NoArgs) {}
+
+  // 用户是否在线
+  rpc IsSessOnline(IsSessOnlineReq) returns (ret.BoolResp) {}
+  // 关闭用户
+  rpc CloseUser(CloseUserReq) returns (ret.EmptyResp) {}
+  // 交换令牌
+  rpc Exchange(ExchangeReq) returns(ret.EmptyResp) {}
+
+  rpc Msg(MsgReq) returns (ret.EmptyResp) {}
+  rpc AllMsg(AllMsgReq) returns (ret.EmptyResp) {}
+}
+
+message ExchangeReq {
+  string uuid=1;
+  string sess_id=2;
+}
+
+// 发送消息
+message MsgReq {
+  string sess_id=1;
+  bytes content=2;
+}
+
+// 发送消息
+message AllMsgReq {
+  bytes content =1;
+}
+
+// 关闭用户
+message CloseUserReq {
+  string sess_id=1;
+  bytes content=2;
+}
+
+// 得到在线用户
+message IsSessOnlineReq {
+  string sess_id=1;
+}

@@ -1,0 +1,18 @@
+[Unit]
+Description=sample service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/srv/sample
+ExecStart=/srv/sample/bin/sample -C=/srv/sample/conf/sample.toml
+Restart=always
+KillMode=mixed
+TimeoutSec=10
+LimitCORE=infinity
+LimitNOFILE=65535
+LimitNPROC=65535
+
+[Install]
+WantedBy=multi-user.target

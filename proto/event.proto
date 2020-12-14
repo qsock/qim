@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+import "ret.proto";
+import "model.proto";
+
+package event;
+option go_package="github.com/qsock/qim/lib/proto/event";
+
+service Event {
+  rpc Ping (ret.NoArgs) returns (ret.NoArgs) {}
+}
+
+message HttpReport {
+  model.RequestMeta meta=1;
+  string method = 2;
+  int32 status_code = 3;
+  int64 end_on=4;
+  string path=5;
+  string alias = 6;
+  string headers=7;
+  string req=8;
+  string resp=9;
+}
+
+message RpcReport {
+  string err=1;
+  string method=2;
+  int64 created_on=3;
+  int64 end_on=4;
+  string req=5;
+  string resp=6;
+}
+
+message Fresher{
+  int64 user_id=1;
+}
+
+message NewMsg {
+  string chat_id=1;
+  int64 msg_id=2;
+  repeated int64 ids=3;
+}
+
+message Friend {
+  // 发起操作的人
+  int64 operator_id=1;
+  int64 recver_id=2;
+  // 附带的信息s
+  string content=3;
+  int64 id=4;
+}
+
+message GroupNewApply {
+  int64 group_id=1;
+  int64 operator_id=2;
+  int64 recver_id=3;
+  string content=4;
+  int64 id=5;
+}
+
+message GroupManager {
+  int64 user_id=1;
+  int64 group_id=2;
+  int64 manager_id=3;
+  bool is_manager=4;
+}
+
+message GroupMember {
+  int64 operator_id=1;
+  int64 user_id=2;
+  int64 group_id=3;
+  bool flag=4;
+  int64 time=5;
+}
+
+message GroupUpdate {
+  int64 group_id=1;
+  string str=2;
+  int64 time=3;
+  int32 type=4;
+  int64 user_id=5;
+}
+
+message GroupDismiss {
+  int64 operator_id=1;
+  int64 group_id=2;
+  repeated int64 ids=3;
+}

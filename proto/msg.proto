@@ -1,0 +1,242 @@
+syntax = "proto3";
+package msg;
+
+import "ret.proto";
+import "stream.proto";
+import "errmsg.proto";
+import "model.proto";
+
+option go_package="github.com/qsock/qim/lib/proto/msg";
+
+service Msg {
+  rpc Ping (ret.NoArgs) returns (ret.NoArgs) {}
+  rpc Msg (MsgReq) returns (MsgResp) {}
+  rpc SysMsg (SysMsgReq) returns (ret.IntResp) {}
+  rpc RevertSelfMsg (RevertSelfMsgReq) returns (ret.EmptyResp){}
+  rpc ManagerChatMsgRevert (ManagerChatMsgRevertReq) returns (ret.EmptyResp){}
+  rpc GetSysMsg (GetSysMsgReq) returns (GetSysMsgResp){}
+  rpc GetMemberIdByChatId (GetMemberIdByChatIdReq) returns (GetMemberIdByChatIdResp){}
+  rpc UserClosed (UserClosedReq) returns (ret.EmptyResp){}
+  rpc SessConnect(SessConnectReq) returns (ret.BytesResp) {}
+  rpc Exchange (ExchangeReq) returns (ret.EmptyResp){}
+  rpc CloseWithMsg (CloseWithMsgReq) returns (ret.EmptyResp){}
+
+  rpc MarkChatRead (MarkChatReadReq) returns (ret.EmptyResp){}
+  rpc ChatAhead (ChatAheadReq) returns (ret.EmptyResp){}
+  // 创建会话
+  rpc ChatTouch (ChatTouchReq) returns (ret.EmptyResp){}
+  // 删除单边会话,下一个消息，还会回来
+  rpc ChatRemove (ChatRemoveReq) returns (ret.EmptyResp){}
+  // 清空会话
+  rpc ChatClear (ChatClearReq) returns (ret.EmptyResp){}
+  rpc ChatByUids (ChatByUidsReq) returns (ChatByUidsResp){}
+  rpc ChatIds (ChatIdsReq) returns (ChatIdsResp){}
+  rpc ChatByIds (ChatByIdsReq) returns (ChatByIdsResp){}
+  rpc ChatRecordIds (ChatRecordIdsReq) returns (ChatRecordIdsResp){}
+  rpc ChatRecordByIds (ChatRecordByIdsReq) returns (ChatRecordByIdsResp){}
+  rpc ChatMute (ChatMuteReq) returns (ret.EmptyResp){}
+}
+
+message SessConnectReq {
+  string sess_id=1;
+  string server_key=2;
+}
+
+message SysMsgReq {
+  stream.SysMsgModel m=1;
+}
+
+message MsgReq {
+  stream.MsgModel m=1;
+}
+
+message MsgResp {
+  errmsg.ErrMsg err=1;
+  int64 msg_id=2;
+  string chat_id=3;
+}
+
+// 标记会话已读
+message MarkChatReadReq {
+  // 哪个用户去标记这个会话已读
+  int64 user_id=1;
+  // 标记这个会话已读
+  string chat_id=2;
+}
+
+// 置顶会话
+message ChatAheadReq {
+  int64 user_id=1;
+  // 会话id
+  string chat_id=2;
+  bool is_ahead=3;
+}
+
+// 清理会话，清理所有人的
+message ChatClearReq {
+  string chat_id=1;
+}
+
+// 删除单边会话
+message ChatRemoveReq {
+  int64 user_id=1;
+  string chat_id=2;
+}
+
+// 新建会话
+message ChatTouchReq {
+  int64 user_id=1;
+  int64 recver_id=2;
+  stream.ChatType type=3;
+}
+
+// 得到所有会话id
+message ChatIdsReq {
+  int64 user_id=1;
+}
+
+message ChatIdsResp {
+  errmsg.ErrMsg err=1;
+  repeated string ids=2;
+}
+
+message ChatByUidsReq {
+  int64 user_id=1;
+  int32 page=2;
+  int32 page_size=3;
+}
+
+message ChatByUidsResp {
+  errmsg.ErrMsg err=1;
+  repeated ChatItem items=2;
+  int32 total=3;
+}
+
+// 获取所有会话
+message ChatByIdsReq {
+  repeated string ids=1;
+  // 只能查自己的
+  int64 user_id=2;
+}
+
+message ChatItem {
+  string chat_id=1;
+  // 1单聊，2群聊，3聊天室
+  stream.ChatType t= 2;
+  // 置顶时间
+  int64 ahead_on=3;
+  // 更新时间
+  int64 updated_on=4;
+  int32 unread_ct=5;
+  // 最后一条消息
+  int64 last_msg_id=6;
+  // 已读的最后一条消息
+  int64 read_last_msg_id=7;
+  // 是否被静音
+  bool is_mute=8;
+  // 头像
+  repeated string avatars=9;
+  // 群名称
+  string name=10;
+  int64 recver_id=11;
+}
+
+message ChatByIdsResp {
+  errmsg.ErrMsg err=1;
+  repeated ChatItem items=2;
+}
+
+// 获取聊天记录id
+message ChatRecordIdsReq {
+  int64 user_id=1;
+  string chat_id=2;
+  int32 page=3;
+  int32 page_size=4;
+}
+
+message ChatRecordIdsResp {
+  errmsg.ErrMsg err=1;
+  repeated int64 ids=2;
+  int64 total=3;
+}
+
+// 获取聊天记录
+message ChatRecordByIdsReq {
+  int64 user_id=1;
+  // 会话id
+  string chat_id=2;
+  // 聊天id
+  repeated int64 ids=3;
+}
+
+// 获取聊天记录
+message ChatRecordByIdsResp {
+  errmsg.ErrMsg err=1;
+  // 消息
+  repeated stream.MsgModel items=2;
+}
+
+// 将会话静音
+message ChatMuteReq {
+  int64 user_id=1;
+  string chat_id=2;
+  bool is_mute=3;
+}
+
+// 撤回自己的消息
+message RevertSelfMsgReq {
+  model.RequestMeta meta=1;
+  int64 user_id=2;
+  int64 msg_id=3;
+  string chat_id=4;
+}
+
+// 管理员撤回消息
+message ManagerChatMsgRevertReq {
+  model.RequestMeta meta=1;
+  int64 user_id=2;
+  int64 msg_id=3;
+  string chat_id=4;
+}
+
+// 得到系统消息id
+message GetSysMsgReq {
+  int64 user_id=1;
+  int32 page=2;
+  int32 page_size=3;
+}
+
+message GetSysMsgResp {
+  errmsg.ErrMsg err=1;
+  repeated stream.SysMsgModel items=2;
+  int32 total=3;
+}
+
+// 通过会话id，得到会话成员id, 单聊/群聊/聊天室id
+message GetMemberIdByChatIdReq {
+  string chat_id=1;
+}
+
+message GetMemberIdByChatIdResp {
+  errmsg.ErrMsg err=1;
+  repeated int64 ids=2;
+}
+
+// 用户关闭的请求
+message UserClosedReq {
+  string sess_id=1;
+}
+
+// 交换令牌
+message ExchangeReq {
+  int64 user_id=1;
+  string uuid=2;
+  string key=3;
+}
+
+// 关闭用户
+message CloseWithMsgReq {
+  int64 user_id=1;
+  string msg = 2;
+}
+

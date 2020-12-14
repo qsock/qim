@@ -1,0 +1,636 @@
+syntax = "proto3";
+
+package user;
+import "ret.proto";
+import "model.proto";
+import "errmsg.proto";
+import "stream.proto";
+
+option go_package="github.com/qsock/qim/lib/proto/user";
+
+service User {
+  rpc Ping (ret.NoArgs) returns (ret.NoArgs) {}
+  rpc Create (CreateReq) returns (ret.EmptyResp) {}
+  // 用户上一次的更新
+  rpc Lastactive(LastactiveReq) returns (ret.EmptyResp) {}
+  // 用户的更新状态
+  rpc Update (UpdateReq) returns (ret.EmptyResp) {}
+
+  rpc Info(InfoReq) returns (InfoResp) {}
+  rpc Infos(InfosReq) returns (InfosResp) {}
+
+  // 更新备注名称
+  rpc FriendMarknameUpdate(FriendMarknameUpdateReq) returns (ret.EmptyResp) {}
+  // 好友列表
+  rpc FriendIds(FriendIdsReq) returns (FriendIdsResp) {}
+  rpc FriendByIds(FriendByIdsReq) returns (FriendByIdsResp) {}
+  rpc FriendDel(FriendDelReq) returns (ret.EmptyResp) {}
+  // 是否是好友
+  rpc IsFriend(IsFriendReq) returns (ret.BoolResp) {}
+
+  // 新的朋友列表
+  rpc NewApplyUserList (NewApplyUserListReq) returns (NewApplyListResp) {}
+
+  // 添加新好友
+  rpc FriendNewApply(FriendNewApplyReq) returns (ret.EmptyResp) {}
+  // 同意拒绝添加好友
+  rpc FriendNewAgree(FriendNewAgreeReq) returns (ret.EmptyResp) {}
+  rpc FriendNewReject(FriendNewRejectReq) returns (ret.EmptyResp) {}
+  rpc FriendNewDel(FriendNewDelReq) returns (ret.EmptyResp) {}
+  // 忽略这个好友
+  rpc FriendNewIgnore(FriendNewIgnoreReq) returns (ret.EmptyResp) {}
+  rpc FriendsByUid(FriendsByUidReq) returns (FriendsByUidResp) {}
+
+  // 添加黑名单
+  rpc BlacklistAdd(BlacklistAddReq) returns (ret.EmptyResp) {}
+  // 添加黑名单
+  rpc BlacklistDel(BlacklistDelReq) returns (ret.EmptyResp) {}
+  // 黑名单列表
+  rpc Blacklist(BlacklistReq) returns (BlacklistResp) {}
+
+  rpc GroupCreate(GroupCreateReq) returns (GroupCreateResp) {}
+  rpc GroupInfoById(GroupInfoReq) returns (GroupInfoResp) {}
+  rpc GroupInfoByIds(GroupInfosReq) returns (GroupInfosResp) {}
+  rpc GroupsByUid(GroupsByUidReq) returns (GroupsByUidResp) {}
+
+  // 任命管理员
+  rpc GroupAppointManager(GroupAppointManagerReq) returns (ret.EmptyResp) {}
+  rpc GroupManagerList(GroupManagerListReq) returns (GroupManagerListResp) {}
+  rpc IsGroupManager(IsGroupManagerReq) returns (ret.BoolResp) {}
+
+  // 群组成员id
+  rpc GroupMemberIds(GroupMemberIdsReq) returns (GroupMemberIdsResp) {}
+  rpc GroupMemberByIds(GroupMemberByIdsReq) returns (GroupMemberByIdsResp) {}
+  rpc GroupMembersByGroupId(GroupMembersByGroupIdReq) returns (GroupMembersByGroupIdResp) {}
+  // 是否是群成员
+  rpc IsGroupMember(IsGroupMemberReq) returns (ret.BoolResp) {}
+
+  // 管理员直接添加
+  rpc GroupMemberAdd(GroupMemberAddReq) returns (ret.EmptyResp) {}
+  rpc GroupMemberDel(GroupMemberDelReq) returns (ret.EmptyResp) {}
+  rpc GroupLeave(GroupLeaveReq) returns (ret.EmptyResp) {}
+  rpc GroupDismiss(GroupDismissReq) returns (ret.EmptyResp) {}
+
+  // 申请加入群组
+  rpc GroupJoin(GroupJoinReq) returns (ret.EmptyResp) {}
+  rpc GroupJoinAgree(GroupJoinAgreeReq) returns (ret.EmptyResp) {}
+  rpc GroupJoinReject(GroupJoinRejectReq) returns (ret.EmptyResp) {}
+  rpc GroupJoinIgnore(GroupJoinIgnoreReq) returns (ret.EmptyResp) {}
+
+  // 转让群组
+  rpc GroupTransfer(GroupTransferReq) returns (ret.EmptyResp) {}
+
+  // 是否被禁言
+  rpc IsGroupMemberBeenMute(IsGroupMemberBeenMuteReq) returns (ret.BoolResp) {}
+  rpc GroupMute(GroupMuteReq) returns (ret.EmptyResp) {}
+  rpc GroupMuteUser(GroupMuteUserReq) returns (ret.EmptyResp) {}
+  rpc GroupMuteList(GroupMuteListReq) returns (GroupMuteListResp) {}
+  rpc GroupBlock(GroupBlockReq) returns (ret.EmptyResp) {}
+  rpc GroupBlockList(GroupBlockListReq) returns (GroupBlockListResp){}
+  rpc GroupUpdateName(GroupUpdateNameReq) returns (ret.EmptyResp) {}
+  rpc GroupUpdateNotice(GroupUpdateNoticeReq) returns (ret.EmptyResp) {}
+  rpc GroupUpdateAvatar(GroupUpdateAvatarReq) returns (ret.EmptyResp) {}
+  rpc GroupUpdateJoinType(GroupUpdateJoinTypeReq) returns (ret.EmptyResp) {}
+}
+
+enum NewApplyType {
+  NewApplyUser=0;
+  NewApplyGroup=1;
+}
+
+message GroupUpdateJoinTypeReq {
+  int64 user_id=1;
+  int64 group_id=2;
+  GroupJoinType join_type=3;
+}
+
+message GroupUpdateAvatarReq {
+  int64 user_id=1;
+  int64 group_id=2;
+  string avatar=3;
+}
+
+message GroupUpdateNoticeReq {
+  int64 user_id=1;
+  int64 group_id=2;
+  string notice=3;
+}
+
+message GroupUpdateNameReq {
+  int64 user_id=1;
+  int64 group_id=2;
+  string name=3;
+}
+
+message GroupMuteListReq {
+  int64 user_id=1;
+  int64 group_id=2;
+}
+
+message GroupMuteListResp {
+  errmsg.ErrMsg err=1;
+  repeated GroupMember members = 2;
+}
+
+message GroupMuteUserReq{
+  int64 user_id=1;
+  int64 group_id=2;
+  int64 mute_until=3;
+  repeated int64 member_id=4;
+}
+
+message GroupMuteReq{
+  int64 user_id=1;
+  int64 group_id=2;
+  int64 mute_until=3;
+}
+
+message GroupBlockListReq {
+  int64 group_id=1;
+}
+
+message GroupBlockListResp {
+  errmsg.ErrMsg err=1;
+  repeated GroupMember members = 2;
+}
+
+message GroupBlockReq {
+  int64 user_id=1;
+  int64 group_id=2;
+
+  // 拉黑的用户
+  int64 member_id=3;
+  bool is_block=4;
+}
+
+message GroupTransferReq{
+  int64 user_id=1;
+  int64 group_id=2;
+  int64 member_id=3;
+}
+
+message GroupJoinIgnoreReq {
+  int64 user_id=1;
+  int64 group_id=2;
+  int64 member_id=3;
+}
+
+message GroupJoinRejectReq {
+  int64 user_id=1;
+  int64 group_id=2;
+  int64 member_id=3;
+  string reason=4;
+}
+
+message GroupJoinAgreeReq {
+  int64 user_id=1;
+  int64 group_id=2;
+  int64 member_id=3;
+}
+
+message GroupJoinReq {
+  int64 user_id=1;
+  int64 group_id=2;
+  string reason=3;
+}
+
+message GroupDismissReq {
+  int64 user_id=1;
+  int64 group_id=2;
+}
+
+message GroupLeaveReq {
+  int64 user_id=1;
+  int64 group_id=2;
+}
+
+message GroupMemberAddReq {
+  int64 user_id=1;
+  int64 group_id=2;
+  repeated int64 member_ids=3;
+}
+
+message GroupMemberDelReq {
+  int64 user_id=1;
+  int64 group_id=2;
+  repeated int64 member_ids=3;
+}
+
+message GroupMemberByIdsReq {
+  repeated int64 user_ids=1;
+  int64 group_id=2;
+}
+
+message GroupMemberByIdsResp {
+  errmsg.ErrMsg err=1;
+  repeated GroupMember members = 2;
+}
+
+message GroupMembersByGroupIdReq {
+  int64 group_id=1;
+  int32 page=2;
+  int32 page_size=3;
+  int64 user_id=4;
+}
+
+message GroupMembersByGroupIdResp {
+  errmsg.ErrMsg err=1;
+  repeated GroupMember members = 2;
+  int32 total=3;
+}
+
+message IsGroupManagerReq {
+  int64 user_id=1;
+  int64 group_id=2;
+}
+
+message GroupManagerListReq {
+  int64 group_id=1;
+}
+
+message GroupMember {
+  int64 user_id =1;
+  GroupRoleType role_type =2;
+  string mark_name =3;
+  int64 mute_until =4;
+  bool not_disturb =5;
+  int64 created_on =6;
+  bool is_blocked =7;
+  UserInfo user=8;
+}
+
+enum GroupRoleType {
+  GroupRoleNormal=0;
+  GroupRoleOwner=1;
+  GroupRoleManager=2;
+}
+message GroupManagerListResp {
+  errmsg.ErrMsg err=1;
+  repeated GroupMember members = 2;
+}
+
+message GroupAppointManagerReq {
+  // 忽略，不用传
+  int64 user_id=1;
+  // 群组id
+  int64 group_id=2;
+  // 所有的用户id
+  repeated int64 manager_ids=3;
+  // true指定，false取消
+  bool is_appoint=4;
+}
+
+message GroupsByUidReq {
+  // 忽略，不用传
+  int64 user_id=1;
+  // 页号，第几页，从0开始
+  int32 page=2;
+  // 每页数量
+  int32 page_size=3;
+}
+
+message GroupsByUidResp {
+  errmsg.ErrMsg err=1;
+  repeated GroupInfo infos = 2;
+  int32 total=3;
+}
+
+message GroupInfosReq {
+  repeated int64 group_ids=1;
+}
+
+message GroupInfosResp {
+  errmsg.ErrMsg err=1;
+  repeated GroupInfo infos = 2;
+}
+
+message GroupInfoReq{
+  int64 group_id=1;
+}
+
+message GroupInfoResp {
+  errmsg.ErrMsg err=1;
+  GroupInfo info=2;
+}
+
+enum GroupJoinType {
+  // 需要验证
+  GroupJoinAnyone=0;
+  GroupJoinVerify=1;
+  // 无人可以主动加入
+  GroupJoinNone=2;
+}
+
+message GroupInfo {
+  int64 id=1;
+  string name=2;
+  int64 mute_util=3;
+  string notice=4;
+  int64 created_on=5;
+  int32 max_member_ct=6;
+  repeated string avatars=7;
+  GroupJoinType join_type=8;
+  int32 current_ct=9;
+  int64 deleted_on=10;
+  stream.ChatType t=11;
+}
+
+message GroupCreateReq {
+  int64 user_id=1;
+  // 名称
+  string name=2;
+  // 头像
+  string avatar=3;
+  // 添加的群id
+  repeated int64 member_ids=5;
+  // 总的人数
+  int64 max_member_ct=6;
+  // 会话类型,1单聊，2群聊，3聊天室
+  stream.ChatType t=7;
+}
+
+message GroupCreateResp {
+  errmsg.ErrMsg err=1;
+  int64 group_id=2;
+}
+
+// 群组部分
+message GroupMemberIdsReq {
+  int64 group_id=1;
+}
+
+message GroupMemberIdsResp {
+  errmsg.ErrMsg err=1;
+  repeated int64 ids=2;
+}
+
+message IsGroupMemberReq {
+  int64 user_id=1;
+  int64 group_id=2;
+}
+
+message IsGroupMemberBeenMuteReq {
+  int64 user_id=1;
+  int64 group_id=2;
+}
+
+message BlacklistAddReq {
+  int64 user_id=1;
+  int64 black_user_id=2;
+}
+
+message BlacklistDelReq {
+  int64 user_id=1;
+  int64 black_user_id=2;
+}
+
+message BlacklistReq {
+  int64 user_id=1;
+  int32 page=2;
+  int32 page_size=3;
+}
+
+message BlacklistResp {
+  errmsg.ErrMsg err=1;
+  repeated UserInfo users=2;
+  int32 total=3;
+}
+
+
+message InfosReq {
+  repeated int64 user_ids=1;
+}
+
+message InfosResp {
+  errmsg.ErrMsg err=1;
+  repeated UserInfo users=2;
+}
+
+message InfoReq {
+  int64 user_id=1;
+}
+
+message InfoResp {
+  errmsg.ErrMsg err=1;
+  UserInfo user=2;
+}
+
+message IsFriendReq {
+  int64 user_id=1;
+  int64 friend_id=2;
+}
+
+message FriendNewIgnoreReq {
+  // 忽略，不用传
+  int64 user_id=1;
+  // 好友id
+  int64 friend_id=2;
+}
+
+message FriendNewDelReq {
+  // 忽略，不用传
+  int64 user_id=1;
+  // 返回的列表id
+  int64 id=2;
+}
+
+message FriendNewAgreeReq {
+  // 忽略，不用传
+  int64 user_id=1;
+  // 好友id
+  int64 friend_id=2;
+}
+
+message FriendNewRejectReq {
+  // 忽略，不用传
+  int64 user_id=1;
+  // 好友id
+  int64 friend_id=2;
+  // 拒绝理由
+  string reason=3;
+}
+
+// 用户查询自己相关的
+message NewApplyUserListReq {
+  int64 user_id=1;
+  int32 page=2;
+  int32 page_size=3;
+}
+
+message NewItem {
+  // id
+  int64 id=1;
+  // 申请人的id
+  int64 apply_id=2;
+  // 接收群组/人的id
+  int64 recver_id=3;
+  // 申请类型，群组还是用户，0用户，1群组
+  NewApplyType apply_type=4;
+  // 申请的次数
+  int32 ct=5;
+  // 申请是否被忽略
+  bool ignore=6;
+  // 创建时间
+  int64 created_on=7;
+  // 申请状态，1成功，2失败
+  NewApplyStatus status=8;
+  // 更新时间
+  int64 updated_on=9;
+  // 申请原因
+  string reason=10;
+  // 操作用户id
+  int64 operator_id=11;
+  // 操作原因
+  string operator_reason=12;
+  // 接收的人，如果apply_type是用户，才会有
+  UserInfo recv_user=13;
+  // 接收的人，如果apply_type是群组，才会有
+  GroupInfo recv_group=14;
+  // 操作者
+  UserInfo operator_user=15;
+  // 申请用户
+  UserInfo apply_user=16;
+}
+
+message NewApplyListResp {
+  errmsg.ErrMsg err=1;
+  int32 total=2;
+  repeated NewItem items=3;
+}
+
+message FriendNewApplyReq {
+  // 忽略不用传
+  int64 user_id=1;
+  // 好友id
+  int64 friend_id=2;
+  // 备注
+  string reason=3;
+}
+
+// 修改好友备注
+message FriendMarknameUpdateReq {
+  // 用户id
+  int64 user_id=1;
+  // 好友id
+  int64 friend_id=2;
+  // 备注姓名
+  string name=3;
+}
+
+message FriendDelReq {
+  // 忽略
+  int64 user_id=1;
+  // 好友id
+  int64 friend_id=2;
+}
+
+message FriendByIdsReq {
+  repeated int64 ids=1;
+  int64 user_id=2;
+}
+
+message FriendItem {
+  UserInfo user=1;
+  int64 friend_time=2;
+  string mark_name=3;
+  int64 user_id=4;
+}
+
+message FriendByIdsResp {
+  errmsg.ErrMsg err=1;
+  repeated FriendItem items=2;
+}
+
+message FriendIdsReq {
+  int64 user_id=1;
+}
+
+message FriendIdsResp {
+  errmsg.ErrMsg err=1;
+  repeated int64 ids=2;
+}
+
+message FriendsByUidReq {
+  int64 user_id=1;
+  int32 page=2;
+  int32 page_size=3;
+}
+
+message FriendsByUidResp {
+  errmsg.ErrMsg err=1;
+  // 好友 列表
+  repeated FriendItem items=2;
+  // 总好友数
+  int32 total=3;
+}
+
+enum FriendType {
+  // 陌生人
+  FriendTypeAnnonymous = 0;
+  // 好友
+  FriendTypeFriend = 1;
+  // 黑名单
+  FriendTypeBlacklist = 2;
+}
+
+message UpdateReq {
+  // 忽略，不用传 用户id
+  int64 user_id=1;
+  // 用户名称
+  string name=2;
+  // 用户头像
+  string avatar=3;
+  // 性别
+  model.Gender gender=4;
+  // 生日
+  int64 birthday=5;
+  // 简介
+  string brief=6;
+  // 添加好友的类型
+  FriendAddType add_friend_type = 7;
+}
+
+message LastactiveReq {
+  model.RequestMeta meta=1;
+}
+
+message CreateReq{
+   int64 user_id=1;
+   string name=2;
+   string avatar=3;
+   // 性别
+   model.Gender gender=4;
+}
+
+message UserInfo {
+  // 用户id
+  int64 user_id=1;
+  // 用户名称
+  string name=2;
+  // 用户头像
+  string avatar=3;
+  // 性别
+  model.Gender gender=4;
+  // 生日
+  int64 birthday=5;
+  // 简介
+  string brief=6;
+  // 添加好友的方式
+  FriendAddType add_friend_type = 7;
+}
+
+enum FriendAddType {
+  FriendAddTypeFalse = 0;
+  // 默认是需要询问
+  FriendAddNeedAsk=1;
+  // 所有人都可以
+  FriendAddAnyone=2;
+  // 任何人都不行
+  FriendAddNone=3;
+}
+
+enum NewApplyStatus {
+   NewApply=0;
+   NewApplySucceed=1;
+   NewApplyRejected=2;
+}

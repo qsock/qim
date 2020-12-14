@@ -1,0 +1,4284 @@
+{
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "棋友平台",
+        "title": "棋友平台",
+        "contact": {},
+        "version": "1.0"
+    },
+    "basePath": "/qiyou",
+    "paths": {
+        "/chat/ahead": {
+            "post": {
+                "description": "会话置顶",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chat"
+                ],
+                "summary": "会话置顶",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/msg.ChatAheadReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/by-ids": {
+            "get": {
+                "description": "通过会话id获取会话",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chat"
+                ],
+                "summary": "通过会话id获取会话",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "需要查看的id列表,逗号分割所有的id,例如:1234,12511,1100",
+                        "name": "ids",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/msg.ChatByIdsResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/ids": {
+            "get": {
+                "description": "会话的id列表,因为会话是个经常变化的属性，所以每次进入app，只需要拉取会话id，跟本地对比",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chat"
+                ],
+                "summary": "会话的id列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/msg.ChatIdsResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/list": {
+            "get": {
+                "description": "查看自己的会话列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chat"
+                ],
+                "summary": "查看自己的会话列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "总页数，从0开始",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量，默认200条",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/msg.ChatByUidsResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/mark-read": {
+            "post": {
+                "description": "标记会话已读",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chat"
+                ],
+                "summary": "标记会话已读",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/msg.MarkChatReadReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/mute": {
+            "post": {
+                "description": "会话免打扰",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chat"
+                ],
+                "summary": "会话免打扰",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/msg.ChatMuteReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/record/by-ids": {
+            "get": {
+                "description": "通过聊天记录id查找聊天记录",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chat"
+                ],
+                "summary": "通过聊天记录id查找聊天记录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "会话id",
+                        "name": "chat_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "需要查看的id列表,逗号分割所有的id,例如:1234,12511,1100",
+                        "name": "ids",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/msg.ChatRecordByIdsResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/record/ids": {
+            "get": {
+                "description": "查找聊天记录id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chat"
+                ],
+                "summary": "查找聊天记录id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "会话id",
+                        "name": "chat_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "总页数，从0开始",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量，默认200条",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/msg.ChatRecordIdsResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/remove": {
+            "post": {
+                "description": "移除会话",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chat"
+                ],
+                "summary": "移除会话",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/msg.ChatRemoveReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/touch": {
+            "post": {
+                "description": "创建会话",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chat"
+                ],
+                "summary": "创建会话",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/msg.ChatTouchReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/file/locations": {
+            "get": {
+                "description": "获取省市",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "获取省市",
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/file.GetProvinceAndCityResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/file/sys/avatars": {
+            "get": {
+                "description": "获取所有系统头像",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "获取所有系统头像",
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/file.GetSysAvatarsResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/friend/by-ids": {
+            "get": {
+                "description": "通过好友id，获取好友信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "friend"
+                ],
+                "summary": "通过好友id，获取好友信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "需要查看的id列表,逗号分割所有的id,例如:1234,12511,1100",
+                        "name": "ids",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/user.FriendByIdsResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/friend/del": {
+            "post": {
+                "description": "删除好友",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "friend"
+                ],
+                "summary": "删除好友",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.FriendDelReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/friend/list": {
+            "get": {
+                "description": "获取自己的好友列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "friend"
+                ],
+                "summary": "获取自己的好友列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "总页数，从0开始",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量，默认30条",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/user.FriendsByUidResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/friend/mark-name": {
+            "post": {
+                "description": "更新备注名称",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "friend"
+                ],
+                "summary": "更新备注名称",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.FriendMarknameUpdateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/friend/new/agree": {
+            "post": {
+                "description": "同意添加好友",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "friend"
+                ],
+                "summary": "同意添加好友",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.FriendNewAgreeReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/friend/new/apply": {
+            "post": {
+                "description": "申请添加新好友",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "friend"
+                ],
+                "summary": "申请添加新好友",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.FriendNewApplyReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/friend/new/apply/list": {
+            "get": {
+                "description": "新的朋友\u0026群组列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "friend"
+                ],
+                "summary": "新的朋友\u0026群组列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "总页数，从0开始",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量，默认30条",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/user.NewApplyListResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/friend/new/del": {
+            "post": {
+                "description": "删除新好友列表的其中一个内容",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "friend"
+                ],
+                "summary": "删除新好友列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.FriendNewDelReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/friend/new/ignore": {
+            "post": {
+                "description": "忽略这个好友的申请",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "friend"
+                ],
+                "summary": "忽略这个好友",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.FriendNewIgnoreReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/friend/new/reject": {
+            "post": {
+                "description": "拒绝添加好友",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "friend"
+                ],
+                "summary": "拒绝添加好友",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.FriendNewRejectReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/appoint/manager": {
+            "post": {
+                "description": "群主指定管理员",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "群主指定管理员",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupAppointManagerReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/block": {
+            "post": {
+                "description": "拉黑某个人",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "拉黑某个人",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupBlockReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/create": {
+            "post": {
+                "description": "创建群组",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "创建群组",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupCreateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/dismiss": {
+            "post": {
+                "description": "解散群组",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "解散群组",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupDismissReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/info": {
+            "get": {
+                "description": "通过id查询一个群组",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "通过id查询群组",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "群组id",
+                        "name": "group_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupInfoResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/infos": {
+            "get": {
+                "description": "通过id查询多个群组",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "通过id查询群组列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "需要查看的id列表,逗号分割所有的id,例如:1234,12511,1100",
+                        "name": "group_ids",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupInfoResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/join/agree": {
+            "post": {
+                "description": "同意申请加入群组",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "同意申请加入群组",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupJoinAgreeReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/join/apply": {
+            "post": {
+                "description": "申请加入群组",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "申请加入群组",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupJoinReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/join/ignore": {
+            "post": {
+                "description": "忽略申请加入群组",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "忽略申请加入群组",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupJoinIgnoreReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/join/reject": {
+            "post": {
+                "description": "拒绝申请加入群组",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "拒绝申请加入群组",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupJoinRejectReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/leave": {
+            "post": {
+                "description": "离开群组",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "离开群组",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupLeaveReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/managers": {
+            "get": {
+                "description": "群组管理员列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "群组管理员列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "群组id",
+                        "name": "group_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupManagerListResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/member/add": {
+            "post": {
+                "description": "添加群成员",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "添加群成员",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupMemberAddReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/member/by-ids": {
+            "get": {
+                "description": "通过群组成员id获取成员",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "通过群组成员id获取成员",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "群组id",
+                        "name": "group_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "需要查看的成员id列表,逗号分割所有的id,例如:1234,12511,1100",
+                        "name": "ids",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupMemberByIdsResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/member/del": {
+            "post": {
+                "description": "添加群成员",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "删除群成员",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupMemberDelReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/member/ids": {
+            "get": {
+                "description": "获取群组成员id列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "获取群组成员id列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "群组id",
+                        "name": "group_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupMemberIdsResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/members": {
+            "get": {
+                "description": "所在群的群成员",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "所在群的群成员",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "群组id",
+                        "name": "group_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "总页数，从0开始",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量，默认30条",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupMemberIdsResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/mute": {
+            "post": {
+                "description": "群组禁言",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "群组禁言",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupMuteReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/mute/list": {
+            "get": {
+                "description": "禁言列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "禁言列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "群组id",
+                        "name": "group_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupMuteListResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/mute/user": {
+            "post": {
+                "description": "禁言某些人",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "禁言某些人",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupMuteUserReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/transfer": {
+            "post": {
+                "description": "转让群组",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "转让群组",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupTransferReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/update/avatar": {
+            "post": {
+                "description": "更新群头像",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "更新群头像",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupUpdateAvatarReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/update/jointype": {
+            "post": {
+                "description": "修改群加入类型",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "修改群加入类型",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupUpdateJoinTypeReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/update/name": {
+            "post": {
+                "description": "更新群组名称",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "更新群组名称",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupUpdateNameReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/update/notice": {
+            "post": {
+                "description": "更新群通知",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "更新群通知",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupUpdateNoticeReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/msg": {
+            "post": {
+                "description": "发送消息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "msg"
+                ],
+                "summary": "发送消息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/msg.MsgReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/msg.MsgResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/msg/exchange": {
+            "post": {
+                "description": "交换消息服务器令牌",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "msg"
+                ],
+                "summary": "交换消息服务器令牌",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/msg.ExchangeReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/msg/revert": {
+            "post": {
+                "description": "撤回自己的消息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "msg"
+                ],
+                "summary": "撤回自己的消息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/msg.RevertSelfMsgReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/msg/revert/by-manager": {
+            "post": {
+                "description": "管理员撤回消息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "msg"
+                ],
+                "summary": "管理员撤回消息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/msg.ManagerChatMsgRevertReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/msg/sys": {
+            "get": {
+                "description": "得到系统消息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "msg"
+                ],
+                "summary": "得到系统消息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "总页数，从0开始",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量，默认200条",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/msg.GetSysMsgResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/passport/login/qq": {
+            "post": {
+                "description": "qq号登陆",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "passport"
+                ],
+                "summary": "qq号登陆",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/passport.QqloginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/passport.LoginResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/passport/login/sms": {
+            "post": {
+                "description": "发送登陆短信",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "passport"
+                ],
+                "summary": "发送登陆短信",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/passport.SmsReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/passport/login/tel": {
+            "post": {
+                "description": "手机号登陆",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "passport"
+                ],
+                "summary": "手机号登陆",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/passport.TelLoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/passport.LoginResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/passport/login/wx": {
+            "post": {
+                "description": "微信号登陆",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "passport"
+                ],
+                "summary": "微信号登陆",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/passport.WxLoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/passport.LoginResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/passport/logout": {
+            "post": {
+                "description": "登出",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "passport"
+                ],
+                "summary": "登出",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ret.StringResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/passport/refresh": {
+            "post": {
+                "description": "刷新token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "passport"
+                ],
+                "summary": "刷新token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/passport.RefreshReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ret.StringResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/proto": {
+            "get": {
+                "description": "请用  https://tool.chinaz.com/tools/urlencode.aspx 进行文本的decode",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "common"
+                ],
+                "summary": "得到proto文件",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "文件名:stream,errmsg,model",
+                        "name": "name",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "resp",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/time": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "common"
+                ],
+                "summary": "得到系统时间。",
+                "responses": {
+                    "200": {
+                        "description": "resp",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/groups": {
+            "get": {
+                "description": "个人群组列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "个人群组列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "总页数，从0开始",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量，默认30条",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/user.GroupsByUidResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/info": {
+            "get": {
+                "description": "查看用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "查看用户信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "需要查看的用户id",
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/user.InfoResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/lastactive": {
+            "post": {
+                "description": "用户上次活跃",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "用户上次活跃",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/update": {
+            "post": {
+                "description": "更新用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "更新用户信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "校验的header",
+                        "name": "x-token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "entity",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.UpdateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求返回",
+                        "schema": {
+                            "$ref": "#/definitions/ginproxy.Resp"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "errmsg.ErrMsg": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "file.GetProvinceAndCityResp": {
+            "type": "object",
+            "properties": {
+                "cities": {
+                    "description": "城市",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Cnarea2019"
+                    }
+                },
+                "provinces": {
+                    "description": "省",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Cnarea2019"
+                    }
+                }
+            }
+        },
+        "file.GetSysAvatarsResp": {
+            "type": "object",
+            "properties": {
+                "avatars": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "ginproxy.Resp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "返回的错误码",
+                    "type": "integer"
+                },
+                "data": {
+                    "description": "返回的内容",
+                    "type": "object"
+                },
+                "message": {
+                    "description": "返回的错误信息",
+                    "type": "string"
+                }
+            }
+        },
+        "model.Cnarea2019": {
+            "type": "object",
+            "properties": {
+                "area_code": {
+                    "description": "行政代码",
+                    "type": "integer"
+                },
+                "city_code": {
+                    "description": "区号",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "区域的id",
+                    "type": "integer"
+                },
+                "lat": {
+                    "description": "纬度",
+                    "type": "number"
+                },
+                "level": {
+                    "description": "等级",
+                    "type": "integer"
+                },
+                "lng": {
+                    "description": "经度",
+                    "type": "number"
+                },
+                "merger_name": {
+                    "description": "组合名",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "名称",
+                    "type": "string"
+                },
+                "parent_code": {
+                    "description": "父级行政代码",
+                    "type": "integer"
+                },
+                "pinyin": {
+                    "description": "拼音",
+                    "type": "string"
+                },
+                "short_name": {
+                    "description": "简称",
+                    "type": "string"
+                },
+                "zip_code": {
+                    "description": "邮政编码",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.Gift": {
+            "type": "object",
+            "properties": {
+                "cover_img": {
+                    "description": "礼物封面图",
+                    "type": "string"
+                },
+                "gift_cost": {
+                    "description": "礼物价格",
+                    "type": "integer"
+                },
+                "id": {
+                    "description": "礼物id",
+                    "type": "integer"
+                },
+                "imgs": {
+                    "description": "礼物的序列帧图",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "model.RequestMeta": {
+            "type": "object",
+            "properties": {
+                "app_name": {
+                    "type": "string"
+                },
+                "app_version": {
+                    "type": "string"
+                },
+                "created_on": {
+                    "type": "integer"
+                },
+                "device": {
+                    "type": "integer"
+                },
+                "device_id": {
+                    "type": "string"
+                },
+                "lat": {
+                    "type": "string"
+                },
+                "lng": {
+                    "type": "string"
+                },
+                "trace_id": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "user_ip": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.UserAuth": {
+            "type": "object",
+            "properties": {
+                "refresh_token": {
+                    "description": "刷新的token",
+                    "type": "string"
+                },
+                "token": {
+                    "description": "用户鉴权用的token,jwt的token,24小时过期，用refresh-token去刷新使用\n每次需要放在header:x-token中传过来",
+                    "type": "string"
+                },
+                "user_id": {
+                    "description": "用户的id",
+                    "type": "integer"
+                }
+            }
+        },
+        "msg.ChatAheadReq": {
+            "type": "object",
+            "properties": {
+                "chat_id": {
+                    "description": "会话id",
+                    "type": "string"
+                },
+                "is_ahead": {
+                    "type": "boolean"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "msg.ChatByIdsResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/msg.ChatItem"
+                    }
+                }
+            }
+        },
+        "msg.ChatByUidsResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/msg.ChatItem"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "msg.ChatIdsResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "msg.ChatItem": {
+            "type": "object",
+            "properties": {
+                "ahead_on": {
+                    "description": "置顶时间",
+                    "type": "integer"
+                },
+                "avatars": {
+                    "description": "头像",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "chat_id": {
+                    "type": "string"
+                },
+                "is_mute": {
+                    "description": "是否被静音",
+                    "type": "boolean"
+                },
+                "last_msg_id": {
+                    "description": "最后一条消息",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "群名称",
+                    "type": "string"
+                },
+                "read_last_msg_id": {
+                    "description": "已读的最后一条消息",
+                    "type": "integer"
+                },
+                "recver_id": {
+                    "type": "integer"
+                },
+                "t": {
+                    "description": "1单聊，2群聊，3聊天室",
+                    "type": "integer"
+                },
+                "unread_ct": {
+                    "type": "integer"
+                },
+                "updated_on": {
+                    "description": "更新时间",
+                    "type": "integer"
+                }
+            }
+        },
+        "msg.ChatMuteReq": {
+            "type": "object",
+            "properties": {
+                "chat_id": {
+                    "type": "string"
+                },
+                "is_mute": {
+                    "type": "boolean"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "msg.ChatRecordByIdsResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "items": {
+                    "description": "消息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/stream.MsgModel"
+                    }
+                }
+            }
+        },
+        "msg.ChatRecordIdsResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "msg.ChatRemoveReq": {
+            "type": "object",
+            "properties": {
+                "chat_id": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "msg.ChatTouchReq": {
+            "type": "object",
+            "properties": {
+                "recver_id": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "msg.ExchangeReq": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "msg.GetSysMsgResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/stream.SysMsgModel"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "msg.ManagerChatMsgRevertReq": {
+            "type": "object",
+            "properties": {
+                "chat_id": {
+                    "type": "string"
+                },
+                "meta": {
+                    "$ref": "#/definitions/model.RequestMeta"
+                },
+                "msg_id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "msg.MarkChatReadReq": {
+            "type": "object",
+            "properties": {
+                "chat_id": {
+                    "description": "标记这个会话已读",
+                    "type": "string"
+                },
+                "user_id": {
+                    "description": "哪个用户去标记这个会话已读",
+                    "type": "integer"
+                }
+            }
+        },
+        "msg.MsgReq": {
+            "type": "object",
+            "properties": {
+                "m": {
+                    "$ref": "#/definitions/stream.MsgModel"
+                }
+            }
+        },
+        "msg.MsgResp": {
+            "type": "object",
+            "properties": {
+                "chat_id": {
+                    "type": "string"
+                },
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "msg_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "msg.RevertSelfMsgReq": {
+            "type": "object",
+            "properties": {
+                "chat_id": {
+                    "type": "string"
+                },
+                "meta": {
+                    "$ref": "#/definitions/model.RequestMeta"
+                },
+                "msg_id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "passport.LoginResp": {
+            "type": "object",
+            "properties": {
+                "auth": {
+                    "description": "用户auth信息",
+                    "$ref": "#/definitions/model.UserAuth"
+                },
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                }
+            }
+        },
+        "passport.QqloginReq": {
+            "type": "object",
+            "properties": {
+                "meta": {
+                    "description": "忽略",
+                    "$ref": "#/definitions/model.RequestMeta"
+                },
+                "openid": {
+                    "description": "qq返回的openid",
+                    "type": "string"
+                },
+                "token": {
+                    "description": "qq返回的accesstoken",
+                    "type": "string"
+                }
+            }
+        },
+        "passport.RefreshReq": {
+            "type": "object",
+            "properties": {
+                "meta": {
+                    "description": "忽略",
+                    "$ref": "#/definitions/model.RequestMeta"
+                },
+                "refresh_token": {
+                    "description": "refresh_token",
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "passport.SmsReq": {
+            "type": "object",
+            "properties": {
+                "tel": {
+                    "description": "手机号",
+                    "type": "string"
+                }
+            }
+        },
+        "passport.TelLoginReq": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "验证码",
+                    "type": "string"
+                },
+                "meta": {
+                    "description": "忽略",
+                    "$ref": "#/definitions/model.RequestMeta"
+                },
+                "tel": {
+                    "description": "手机号",
+                    "type": "string"
+                }
+            }
+        },
+        "passport.WxLoginReq": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "微信登陆的code",
+                    "type": "string"
+                },
+                "meta": {
+                    "description": "忽略",
+                    "$ref": "#/definitions/model.RequestMeta"
+                }
+            }
+        },
+        "ret.StringResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "str": {
+                    "type": "string"
+                }
+            }
+        },
+        "stream.AudioMsg": {
+            "type": "object",
+            "properties": {
+                "duration": {
+                    "description": "音频时长，毫秒为单位",
+                    "type": "integer"
+                },
+                "src_url": {
+                    "description": "音频地址",
+                    "type": "string"
+                }
+            }
+        },
+        "stream.CommandMsg": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "请求附带的内容信息",
+                    "type": "string"
+                },
+                "extra": {
+                    "description": "额外附带的信息，有可能提供前端，或者自己使用",
+                    "type": "string"
+                },
+                "noise": {
+                    "description": "是否需要震动/声音",
+                    "type": "boolean"
+                },
+                "operator_id": {
+                    "description": "操作者,是谁操作的这个事儿",
+                    "type": "integer"
+                },
+                "recver_id": {
+                    "description": "接受者,谁来接受的这个事儿",
+                    "type": "integer"
+                },
+                "t": {
+                    "description": "命令的枚举",
+                    "type": "integer"
+                }
+            }
+        },
+        "stream.GiftMsg": {
+            "type": "object",
+            "properties": {
+                "gift": {
+                    "description": "礼物对象",
+                    "$ref": "#/definitions/model.Gift"
+                },
+                "is_horse_lamp": {
+                    "description": "是否显示跑马灯,即弹窗效果，很酷炫的这种",
+                    "type": "boolean"
+                }
+            }
+        },
+        "stream.HintMsg": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "消息内容",
+                    "type": "string"
+                },
+                "t": {
+                    "description": "通知消息的枚举",
+                    "type": "integer"
+                }
+            }
+        },
+        "stream.LocationMsg": {
+            "type": "object",
+            "properties": {
+                "cover_url": {
+                    "description": "封面图",
+                    "type": "string"
+                },
+                "desc": {
+                    "description": "描述信息",
+                    "type": "string"
+                },
+                "lat": {
+                    "description": "纬度",
+                    "type": "string"
+                },
+                "lng": {
+                    "description": "经度",
+                    "type": "string"
+                }
+            }
+        },
+        "stream.MsgModel": {
+            "type": "object",
+            "properties": {
+                "audio": {
+                    "description": "音频消息",
+                    "$ref": "#/definitions/stream.AudioMsg"
+                },
+                "chat_id": {
+                    "description": "会话id",
+                    "type": "string"
+                },
+                "chat_type": {
+                    "description": "会话类型,1单聊，2群聊，3聊天室",
+                    "type": "integer"
+                },
+                "command": {
+                    "description": "命令类型的消息",
+                    "$ref": "#/definitions/stream.CommandMsg"
+                },
+                "created_on": {
+                    "description": "创建时间",
+                    "type": "integer"
+                },
+                "device": {
+                    "description": "发送的设备",
+                    "type": "integer"
+                },
+                "gift": {
+                    "description": "礼物消息，送礼物的消息",
+                    "$ref": "#/definitions/stream.GiftMsg"
+                },
+                "hint": {
+                    "description": "显示在中间的提示类型消息",
+                    "$ref": "#/definitions/stream.HintMsg"
+                },
+                "location": {
+                    "description": "地理位置消息",
+                    "$ref": "#/definitions/stream.LocationMsg"
+                },
+                "msg_id": {
+                    "description": "C端忽略",
+                    "type": "integer"
+                },
+                "msg_type": {
+                    "description": "消息类型",
+                    "type": "integer"
+                },
+                "pic": {
+                    "description": "图片消息",
+                    "$ref": "#/definitions/stream.PicMsg"
+                },
+                "recv_id": {
+                    "description": "接受者id",
+                    "type": "integer"
+                },
+                "revert": {
+                    "description": "其他的额外附带消息",
+                    "$ref": "#/definitions/stream.RevertMsg"
+                },
+                "sender_id": {
+                    "description": "C端忽略",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "消息状态",
+                    "type": "integer"
+                },
+                "text": {
+                    "description": "oneof data {\n文本消息",
+                    "$ref": "#/definitions/stream.TextMsg"
+                },
+                "video": {
+                    "description": "视频消息",
+                    "$ref": "#/definitions/stream.VideoMsg"
+                }
+            }
+        },
+        "stream.PicMsg": {
+            "type": "object",
+            "properties": {
+                "cover_url": {
+                    "description": "缩略图地址",
+                    "type": "string"
+                },
+                "height": {
+                    "description": "图片宽高",
+                    "type": "integer"
+                },
+                "src_url": {
+                    "description": "原图地址",
+                    "type": "string"
+                },
+                "width": {
+                    "type": "integer"
+                }
+            }
+        },
+        "stream.RevertMsg": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "msg_id": {
+                    "type": "integer"
+                },
+                "operator_id": {
+                    "description": "操作者id",
+                    "type": "integer"
+                }
+            }
+        },
+        "stream.SysCloseMsg": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "附带信息",
+                    "type": "string"
+                },
+                "operator_id": {
+                    "description": "操作者,是谁操作的这个事儿",
+                    "type": "integer"
+                },
+                "pop": {
+                    "description": "need_pop,是否需要弹窗",
+                    "type": "boolean"
+                },
+                "recver_id": {
+                    "description": "接受者,谁来接受的这个事儿",
+                    "type": "integer"
+                }
+            }
+        },
+        "stream.SysCommandMsg": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "请求附带的内容信息",
+                    "type": "string"
+                },
+                "extra": {
+                    "description": "额外附带的信息，有可能提供前端，或者自己使用",
+                    "type": "string"
+                },
+                "noise": {
+                    "description": "是否触发震动/声音",
+                    "type": "boolean"
+                },
+                "operator_id": {
+                    "description": "操作者,是谁操作的这个事儿",
+                    "type": "integer"
+                },
+                "recver_id": {
+                    "description": "接受者,谁来接受的这个事儿",
+                    "type": "integer"
+                },
+                "t": {
+                    "type": "integer"
+                }
+            }
+        },
+        "stream.SysLinkMsg": {
+            "type": "object",
+            "properties": {
+                "cover_url": {
+                    "description": "封面图",
+                    "type": "string"
+                },
+                "desc": {
+                    "description": "简单描述",
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "stream.SysMsgModel": {
+            "type": "object",
+            "properties": {
+                "close": {
+                    "$ref": "#/definitions/stream.SysCloseMsg"
+                },
+                "command": {
+                    "description": "指令消息",
+                    "$ref": "#/definitions/stream.SysCommandMsg"
+                },
+                "created_on": {
+                    "description": "创建时间",
+                    "type": "integer"
+                },
+                "link": {
+                    "$ref": "#/definitions/stream.SysLinkMsg"
+                },
+                "msg_id": {
+                    "description": "消息id",
+                    "type": "integer"
+                },
+                "msg_type": {
+                    "description": "消息类型",
+                    "type": "integer"
+                },
+                "need_push": {
+                    "description": "是否需要发送push消息",
+                    "type": "boolean"
+                },
+                "need_save": {
+                    "description": "是否需要存储",
+                    "type": "boolean"
+                },
+                "pop": {
+                    "description": "弹窗消息",
+                    "$ref": "#/definitions/stream.SysPopMsg"
+                },
+                "recver_id": {
+                    "description": "接收条件,0就是所有人都接收",
+                    "type": "integer"
+                },
+                "send_on": {
+                    "description": "系统消息的发送时间",
+                    "type": "integer"
+                },
+                "sender_id": {
+                    "description": "发送者id,0就是系统发送的",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "撤回消息",
+                    "type": "integer"
+                },
+                "text": {
+                    "description": "消息体\n不用one-of的原因是json无法解析了\noneof data {\n文本消息",
+                    "$ref": "#/definitions/stream.SysTextMsg"
+                }
+            }
+        },
+        "stream.SysPopMsg": {
+            "type": "object",
+            "properties": {
+                "can_close": {
+                    "description": "是否可以手动关闭",
+                    "type": "boolean"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "duration": {
+                    "description": "弹窗出现多长时间",
+                    "type": "integer"
+                },
+                "start_at": {
+                    "description": "弹窗开始时间",
+                    "type": "integer"
+                }
+            }
+        },
+        "stream.SysTextMsg": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "富文本消息",
+                    "type": "string"
+                },
+                "cover_url": {
+                    "description": "封面图",
+                    "type": "string"
+                }
+            }
+        },
+        "stream.TextMsg": {
+            "type": "object",
+            "properties": {
+                "at_uids": {
+                    "description": "@的用户",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "content": {
+                    "description": "消息内容",
+                    "type": "string"
+                }
+            }
+        },
+        "stream.VideoMsg": {
+            "type": "object",
+            "properties": {
+                "cover_url": {
+                    "description": "封面图地址",
+                    "type": "string"
+                },
+                "duration": {
+                    "description": "视频时长，毫秒为单位",
+                    "type": "integer"
+                },
+                "height": {
+                    "description": "图片宽高",
+                    "type": "integer"
+                },
+                "src_url": {
+                    "description": "视频地址",
+                    "type": "string"
+                },
+                "width": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.FriendByIdsResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/user.FriendItem"
+                    }
+                }
+            }
+        },
+        "user.FriendDelReq": {
+            "type": "object",
+            "properties": {
+                "friend_id": {
+                    "description": "好友id",
+                    "type": "integer"
+                },
+                "user_id": {
+                    "description": "忽略",
+                    "type": "integer"
+                }
+            }
+        },
+        "user.FriendIdsResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
+        "user.FriendItem": {
+            "type": "object",
+            "properties": {
+                "friend_time": {
+                    "type": "integer"
+                },
+                "mark_name": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/user.UserInfo"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.FriendMarknameUpdateReq": {
+            "type": "object",
+            "properties": {
+                "friend_id": {
+                    "description": "好友id",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "备注姓名",
+                    "type": "string"
+                },
+                "user_id": {
+                    "description": "用户id",
+                    "type": "integer"
+                }
+            }
+        },
+        "user.FriendNewAgreeReq": {
+            "type": "object",
+            "properties": {
+                "friend_id": {
+                    "description": "好友id",
+                    "type": "integer"
+                },
+                "user_id": {
+                    "description": "忽略，不用传",
+                    "type": "integer"
+                }
+            }
+        },
+        "user.FriendNewApplyReq": {
+            "type": "object",
+            "properties": {
+                "friend_id": {
+                    "description": "好友id",
+                    "type": "integer"
+                },
+                "reason": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "user_id": {
+                    "description": "忽略不用传",
+                    "type": "integer"
+                }
+            }
+        },
+        "user.FriendNewDelReq": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "返回的列表id",
+                    "type": "integer"
+                },
+                "user_id": {
+                    "description": "忽略，不用传",
+                    "type": "integer"
+                }
+            }
+        },
+        "user.FriendNewIgnoreReq": {
+            "type": "object",
+            "properties": {
+                "friend_id": {
+                    "description": "好友id",
+                    "type": "integer"
+                },
+                "user_id": {
+                    "description": "忽略，不用传",
+                    "type": "integer"
+                }
+            }
+        },
+        "user.FriendNewRejectReq": {
+            "type": "object",
+            "properties": {
+                "friend_id": {
+                    "description": "好友id",
+                    "type": "integer"
+                },
+                "reason": {
+                    "description": "拒绝理由",
+                    "type": "string"
+                },
+                "user_id": {
+                    "description": "忽略，不用传",
+                    "type": "integer"
+                }
+            }
+        },
+        "user.FriendsByUidResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "items": {
+                    "description": "好友 列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/user.FriendItem"
+                    }
+                },
+                "total": {
+                    "description": "总好友数",
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupAppointManagerReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "description": "群组id",
+                    "type": "integer"
+                },
+                "is_appoint": {
+                    "description": "true指定，false取消",
+                    "type": "boolean"
+                },
+                "manager_ids": {
+                    "description": "所有的用户id",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "user_id": {
+                    "description": "忽略，不用传",
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupBlockReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "integer"
+                },
+                "is_block": {
+                    "type": "boolean"
+                },
+                "member_id": {
+                    "description": "拉黑的用户",
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupCreateReq": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "description": "头像",
+                    "type": "string"
+                },
+                "max_member_ct": {
+                    "description": "总的人数",
+                    "type": "integer"
+                },
+                "member_ids": {
+                    "description": "添加的群id",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "name": {
+                    "description": "名称",
+                    "type": "string"
+                },
+                "t": {
+                    "description": "会话类型,1单聊，2群聊，3聊天室",
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupDismissReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupInfo": {
+            "type": "object",
+            "properties": {
+                "avatars": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "created_on": {
+                    "type": "integer"
+                },
+                "current_ct": {
+                    "type": "integer"
+                },
+                "deleted_on": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "join_type": {
+                    "type": "integer"
+                },
+                "max_member_ct": {
+                    "type": "integer"
+                },
+                "mute_util": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "notice": {
+                    "type": "string"
+                }
+            }
+        },
+        "user.GroupInfoResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "info": {
+                    "$ref": "#/definitions/user.GroupInfo"
+                }
+            }
+        },
+        "user.GroupJoinAgreeReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "integer"
+                },
+                "member_id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupJoinIgnoreReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "integer"
+                },
+                "member_id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupJoinRejectReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "integer"
+                },
+                "member_id": {
+                    "type": "integer"
+                },
+                "reason": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupJoinReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "integer"
+                },
+                "reason": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupLeaveReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupManagerListResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/user.GroupMember"
+                    }
+                }
+            }
+        },
+        "user.GroupMember": {
+            "type": "object",
+            "properties": {
+                "created_on": {
+                    "type": "integer"
+                },
+                "is_blocked": {
+                    "type": "boolean"
+                },
+                "mark_name": {
+                    "type": "string"
+                },
+                "mute_until": {
+                    "type": "integer"
+                },
+                "not_disturb": {
+                    "type": "boolean"
+                },
+                "role_type": {
+                    "type": "integer"
+                },
+                "user": {
+                    "$ref": "#/definitions/user.UserInfo"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupMemberAddReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "integer"
+                },
+                "member_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupMemberByIdsResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/user.GroupMember"
+                    }
+                }
+            }
+        },
+        "user.GroupMemberDelReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "integer"
+                },
+                "member_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupMemberIdsResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
+        "user.GroupMuteListResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/user.GroupMember"
+                    }
+                }
+            }
+        },
+        "user.GroupMuteReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "integer"
+                },
+                "mute_until": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupMuteUserReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "integer"
+                },
+                "member_id": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "mute_until": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupTransferReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "integer"
+                },
+                "member_id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupUpdateAvatarReq": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "group_id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupUpdateJoinTypeReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "integer"
+                },
+                "join_type": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupUpdateNameReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupUpdateNoticeReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "integer"
+                },
+                "notice": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.GroupsByUidResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "infos": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/user.GroupInfo"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.InfoResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "user": {
+                    "$ref": "#/definitions/user.UserInfo"
+                }
+            }
+        },
+        "user.NewApplyListResp": {
+            "type": "object",
+            "properties": {
+                "err": {
+                    "$ref": "#/definitions/errmsg.ErrMsg"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/user.NewItem"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.NewItem": {
+            "type": "object",
+            "properties": {
+                "apply_id": {
+                    "description": "申请人的id",
+                    "type": "integer"
+                },
+                "apply_type": {
+                    "description": "申请类型，群组还是用户，0用户，1群组",
+                    "type": "integer"
+                },
+                "apply_user": {
+                    "description": "申请用户",
+                    "$ref": "#/definitions/user.UserInfo"
+                },
+                "created_on": {
+                    "description": "创建时间",
+                    "type": "integer"
+                },
+                "ct": {
+                    "description": "申请的次数",
+                    "type": "integer"
+                },
+                "id": {
+                    "description": "id",
+                    "type": "integer"
+                },
+                "ignore": {
+                    "description": "申请是否被忽略",
+                    "type": "boolean"
+                },
+                "operator_id": {
+                    "description": "操作用户id",
+                    "type": "integer"
+                },
+                "operator_reason": {
+                    "description": "操作原因",
+                    "type": "string"
+                },
+                "operator_user": {
+                    "description": "操作者",
+                    "$ref": "#/definitions/user.UserInfo"
+                },
+                "reason": {
+                    "description": "申请原因",
+                    "type": "string"
+                },
+                "recv_group": {
+                    "description": "接收的人，如果apply_type是群组，才会有",
+                    "$ref": "#/definitions/user.GroupInfo"
+                },
+                "recv_user": {
+                    "description": "接收的人，如果apply_type是用户，才会有",
+                    "$ref": "#/definitions/user.UserInfo"
+                },
+                "recver_id": {
+                    "description": "接收群组/人的id",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "申请状态，1成功，2失败",
+                    "type": "integer"
+                },
+                "updated_on": {
+                    "description": "更新时间",
+                    "type": "integer"
+                }
+            }
+        },
+        "user.UpdateReq": {
+            "type": "object",
+            "properties": {
+                "add_friend_type": {
+                    "description": "添加好友的类型",
+                    "type": "integer"
+                },
+                "avatar": {
+                    "description": "用户头像",
+                    "type": "string"
+                },
+                "birthday": {
+                    "description": "生日",
+                    "type": "integer"
+                },
+                "brief": {
+                    "description": "简介",
+                    "type": "string"
+                },
+                "gender": {
+                    "description": "性别",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "用户名称",
+                    "type": "string"
+                },
+                "user_id": {
+                    "description": "忽略，不用传 用户id",
+                    "type": "integer"
+                }
+            }
+        },
+        "user.UserInfo": {
+            "type": "object",
+            "properties": {
+                "add_friend_type": {
+                    "description": "添加好友的方式",
+                    "type": "integer"
+                },
+                "avatar": {
+                    "description": "用户头像",
+                    "type": "string"
+                },
+                "birthday": {
+                    "description": "生日",
+                    "type": "integer"
+                },
+                "brief": {
+                    "description": "简介",
+                    "type": "string"
+                },
+                "gender": {
+                    "description": "性别",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "用户名称",
+                    "type": "string"
+                },
+                "user_id": {
+                    "description": "用户id",
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

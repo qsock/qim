@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package model;
+option go_package="github.com/qsock/qim/lib/proto/model";
+
+enum Device {
+  DeviceFalse=0;
+  // mac
+  DeviceMac=1;
+  // win
+  DeviceWin=2;
+  // 安卓
+  DeviceAndroid=3;
+  // ios
+  DeviceIos=4;
+  // web
+  DeviceWeb=5;
+  // 小程序
+  DeviceMiniProgram=6;
+}
+
+enum Gender {
+  GenderUnknown = 0;
+  GenderMale=1;
+  GenderFemale=2;
+  GenderSecret=3;
+}
+
+message RequestMeta {
+  string trace_id = 1;
+  Device device = 2;
+  string app_name = 3;
+  string app_version = 4;
+  string device_id = 5;
+  string user_ip = 6;
+  string lat= 7;
+  string lng = 8;
+  int64 user_id=9;
+  int64 created_on=10;
+}
+
+// 用户auth信息
+message UserAuth {
+  // 用户的id
+  int64 user_id=1;
+  // 用户鉴权用的token,jwt的token,24小时过期，用refresh-token去刷新使用
+  // 每次需要放在header:x-token中传过来
+  string token=2;
+  // 刷新的token
+  string refresh_token=3;
+}
+
+message Cnarea2019 {
+  // 区域的id
+  int32 id=1;
+  // 等级
+  int32 level=2;
+  // 父级行政代码
+  int64 parent_code=3;
+  // 行政代码
+  int64 area_code=4;
+  // 邮政编码
+  int32 zip_code=5;
+  // 区号
+  string city_code=6;
+  // 名称
+  string name=7;
+  // 简称
+  string short_name=8;
+  // 组合名
+  string merger_name=9;
+  // 拼音
+  string pinyin=10;
+  // 经度
+  double lng=11;
+  // 纬度
+  double lat=12;
+}
+
+message Gift {
+  // 礼物id
+  int64 id=1;
+  // 礼物封面图
+  string cover_img=2;
+  // 礼物的序列帧图
+  repeated string imgs=3;
+  // 礼物价格
+  int64 gift_cost=4;
+}

@@ -1,0 +1,1 @@
+# 生成swagger:swag init --parseDependency true

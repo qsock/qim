@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+import "errmsg.proto";
+
+package ret;
+option go_package="github.com/qsock/qim/lib/proto/ret";
+
+message NoArgs {}
+
+message EmptyResp {
+  errmsg.ErrMsg err = 1;
+}
+
+message IntResp {
+  errmsg.ErrMsg err = 1;
+  int64 val = 2;
+}
+
+message BoolResp {
+  errmsg.ErrMsg err = 1;
+  bool flag = 2;
+}
+
+message StringResp {
+  errmsg.ErrMsg err = 1;
+  string str = 2;
+}
+
+message BytesResp {
+  errmsg.ErrMsg err = 1;
+  bytes val = 2;
+}

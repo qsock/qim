@@ -1,0 +1,101 @@
+syntax = "proto3";
+
+package file;
+import "ret.proto";
+import "errmsg.proto";
+import "model.proto";
+
+option go_package="github.com/qsock/qim/lib/proto/file";
+
+service File {
+  rpc Ping (ret.NoArgs) returns (ret.NoArgs) {}
+  rpc GetUploadToken(GetUploadTokenReq) returns (GetUploadTokenResp) {}
+  rpc GetUserFile(GetUserFileReq) returns (GetUserFileResp) {}
+  rpc UploadFileByUrl(UploadFileByUrlReq) returns (UploadFileByUrlResp) {}
+  rpc UserUploadSucceed(UserUploadSucceedReq) returns (ret.EmptyResp) {}
+  rpc GetSysAvatars(GetSysAvatarsReq) returns (GetSysAvatarsResp) {}
+
+  // 得到省和市
+  rpc GetProvinceAndCity(GetProvinceAndCityReq) returns (GetProvinceAndCityResp) {}
+}
+
+
+message GetProvinceAndCityReq {
+}
+
+message GetProvinceAndCityResp {
+  // 省
+  repeated model.Cnarea2019 provinces=1;
+  // 城市
+  repeated model.Cnarea2019 cities=2;
+}
+
+message UserUploadSucceedReq {
+  int64 user_id=1;
+  string url=2;
+  string path=3;
+}
+
+message GetUserFileReq {
+  int64 user_id=1;
+  string path=2;
+  int32 page=3;
+  int32 page_size=4;
+}
+
+message GetUserFileResp {
+  errmsg.ErrMsg err=1;
+  repeated UserFile files=2;
+}
+
+message UserFile {
+  int64 id=1;
+  int64 user_id=2;
+  string url=3;
+  string path=4;
+  int64 created_on=5;
+}
+
+enum UploadType {
+  // 上传到本地
+  UploadLocal=0;
+  // 上传到阿里云oss
+  UploadOss=1;
+  // 上传到qiniu
+  UploadQiniu=2;
+  // 上传到腾讯云cos
+  UploadCos = 3;
+}
+
+// 获取upload token
+message GetUploadTokenReq {
+  int64 user_id=1;
+  // url path
+  string path=2;
+}
+
+// 用户上传的回调
+message GetUploadTokenResp {
+  errmsg.ErrMsg err=1;
+  map<int32,string> tokens=2;
+  string path=3;
+}
+
+message UploadFileByUrlReq {
+  int64 user_id=1;
+  // url path
+  string path=2;
+  // url
+  string url=3;
+}
+
+message UploadFileByUrlResp {
+  string url=1;
+}
+
+message GetSysAvatarsReq {
+}
+
+message GetSysAvatarsResp {
+   repeated string avatars=1;
+}

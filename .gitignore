@@ -1,0 +1,13 @@
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.DS_Store
+*.out
+lib/proto
+go.sum
+*.idea
+*__pycache__*
+vendor/

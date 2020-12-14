@@ -1,0 +1,49 @@
+# 对外暴露的http端口号
+port=8004
+# 是什么环境
+env="dev"
+
+# 日志类型，文件：file，终端：stdout，系统日志：syslog
+logtype = "file"
+
+# 日志等级
+loglevel = 1
+
+idkey   =   "user"
+
+# etcd的配置
+[op]
+    # etcd集群的地址
+    endpoints      = ["127.0.0.1:2379"]
+    # 注册的prefix
+    prefix         = "/main/dev"
+    # 注册的服务名称
+    server_name    = "passport.Passport"
+    # 监听的服务名称
+    watch_servers  = ["user.User", "id.Id", "file.File"]
+
+[log]
+    # 文件名称
+    filename       = "passport_server"
+    # 文件数量
+    filenum        = 50
+    # 文件大小Mb
+    filesize       = 256
+    # 日志的输出文件夹
+    dir            = "/srv/passport_server/logs"
+    #  是否开启gzip压缩
+    use_gzip       = true
+
+
+[jwt]
+    signkey="wqf_525@live.cn"
+    aeskey="i+urPsAi!=YHzcBsBtd=2j_B+lu9BaL5"
+    aesiv="WLm1@2SzJf%Kc5b5"
+
+[qqapp]
+    appid="101910219"
+    secret="f2b9bba79d1902a3bffa7b7acc007a8c"
+
+[wxapp]
+    appid="101910219"
+    secret="f2b9bba79d1902a3bffa7b7acc007a8c"

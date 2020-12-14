@@ -1,0 +1,2877 @@
+basePath: /qiyou
+definitions:
+  errmsg.ErrMsg:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  file.GetProvinceAndCityResp:
+    properties:
+      cities:
+        description: 城市
+        items:
+          $ref: '#/definitions/model.Cnarea2019'
+        type: array
+      provinces:
+        description: 省
+        items:
+          $ref: '#/definitions/model.Cnarea2019'
+        type: array
+    type: object
+  file.GetSysAvatarsResp:
+    properties:
+      avatars:
+        items:
+          type: string
+        type: array
+    type: object
+  ginproxy.Resp:
+    properties:
+      code:
+        description: 返回的错误码
+        type: integer
+      data:
+        description: 返回的内容
+        type: object
+      message:
+        description: 返回的错误信息
+        type: string
+    type: object
+  model.Cnarea2019:
+    properties:
+      area_code:
+        description: 行政代码
+        type: integer
+      city_code:
+        description: 区号
+        type: string
+      id:
+        description: 区域的id
+        type: integer
+      lat:
+        description: 纬度
+        type: number
+      level:
+        description: 等级
+        type: integer
+      lng:
+        description: 经度
+        type: number
+      merger_name:
+        description: 组合名
+        type: string
+      name:
+        description: 名称
+        type: string
+      parent_code:
+        description: 父级行政代码
+        type: integer
+      pinyin:
+        description: 拼音
+        type: string
+      short_name:
+        description: 简称
+        type: string
+      zip_code:
+        description: 邮政编码
+        type: integer
+    type: object
+  model.Gift:
+    properties:
+      cover_img:
+        description: 礼物封面图
+        type: string
+      gift_cost:
+        description: 礼物价格
+        type: integer
+      id:
+        description: 礼物id
+        type: integer
+      imgs:
+        description: 礼物的序列帧图
+        items:
+          type: string
+        type: array
+    type: object
+  model.RequestMeta:
+    properties:
+      app_name:
+        type: string
+      app_version:
+        type: string
+      created_on:
+        type: integer
+      device:
+        type: integer
+      device_id:
+        type: string
+      lat:
+        type: string
+      lng:
+        type: string
+      trace_id:
+        type: string
+      user_id:
+        type: integer
+      user_ip:
+        type: string
+    type: object
+  model.UserAuth:
+    properties:
+      refresh_token:
+        description: 刷新的token
+        type: string
+      token:
+        description: |-
+          用户鉴权用的token,jwt的token,24小时过期，用refresh-token去刷新使用
+          每次需要放在header:x-token中传过来
+        type: string
+      user_id:
+        description: 用户的id
+        type: integer
+    type: object
+  msg.ChatAheadReq:
+    properties:
+      chat_id:
+        description: 会话id
+        type: string
+      is_ahead:
+        type: boolean
+      user_id:
+        type: integer
+    type: object
+  msg.ChatByIdsResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      items:
+        items:
+          $ref: '#/definitions/msg.ChatItem'
+        type: array
+    type: object
+  msg.ChatByUidsResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      items:
+        items:
+          $ref: '#/definitions/msg.ChatItem'
+        type: array
+      total:
+        type: integer
+    type: object
+  msg.ChatIdsResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      ids:
+        items:
+          type: string
+        type: array
+    type: object
+  msg.ChatItem:
+    properties:
+      ahead_on:
+        description: 置顶时间
+        type: integer
+      avatars:
+        description: 头像
+        items:
+          type: string
+        type: array
+      chat_id:
+        type: string
+      is_mute:
+        description: 是否被静音
+        type: boolean
+      last_msg_id:
+        description: 最后一条消息
+        type: integer
+      name:
+        description: 群名称
+        type: string
+      read_last_msg_id:
+        description: 已读的最后一条消息
+        type: integer
+      recver_id:
+        type: integer
+      t:
+        description: 1单聊，2群聊，3聊天室
+        type: integer
+      unread_ct:
+        type: integer
+      updated_on:
+        description: 更新时间
+        type: integer
+    type: object
+  msg.ChatMuteReq:
+    properties:
+      chat_id:
+        type: string
+      is_mute:
+        type: boolean
+      user_id:
+        type: integer
+    type: object
+  msg.ChatRecordByIdsResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      items:
+        description: 消息
+        items:
+          $ref: '#/definitions/stream.MsgModel'
+        type: array
+    type: object
+  msg.ChatRecordIdsResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      ids:
+        items:
+          type: integer
+        type: array
+      total:
+        type: integer
+    type: object
+  msg.ChatRemoveReq:
+    properties:
+      chat_id:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  msg.ChatTouchReq:
+    properties:
+      recver_id:
+        type: integer
+      type:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  msg.ExchangeReq:
+    properties:
+      key:
+        type: string
+      user_id:
+        type: integer
+      uuid:
+        type: string
+    type: object
+  msg.GetSysMsgResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      items:
+        items:
+          $ref: '#/definitions/stream.SysMsgModel'
+        type: array
+      total:
+        type: integer
+    type: object
+  msg.ManagerChatMsgRevertReq:
+    properties:
+      chat_id:
+        type: string
+      meta:
+        $ref: '#/definitions/model.RequestMeta'
+      msg_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  msg.MarkChatReadReq:
+    properties:
+      chat_id:
+        description: 标记这个会话已读
+        type: string
+      user_id:
+        description: 哪个用户去标记这个会话已读
+        type: integer
+    type: object
+  msg.MsgReq:
+    properties:
+      m:
+        $ref: '#/definitions/stream.MsgModel'
+    type: object
+  msg.MsgResp:
+    properties:
+      chat_id:
+        type: string
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      msg_id:
+        type: integer
+    type: object
+  msg.RevertSelfMsgReq:
+    properties:
+      chat_id:
+        type: string
+      meta:
+        $ref: '#/definitions/model.RequestMeta'
+      msg_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  passport.LoginResp:
+    properties:
+      auth:
+        $ref: '#/definitions/model.UserAuth'
+        description: 用户auth信息
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+    type: object
+  passport.QqloginReq:
+    properties:
+      meta:
+        $ref: '#/definitions/model.RequestMeta'
+        description: 忽略
+      openid:
+        description: qq返回的openid
+        type: string
+      token:
+        description: qq返回的accesstoken
+        type: string
+    type: object
+  passport.RefreshReq:
+    properties:
+      meta:
+        $ref: '#/definitions/model.RequestMeta'
+        description: 忽略
+      refresh_token:
+        description: refresh_token
+        type: string
+      token:
+        type: string
+    type: object
+  passport.SmsReq:
+    properties:
+      tel:
+        description: 手机号
+        type: string
+    type: object
+  passport.TelLoginReq:
+    properties:
+      code:
+        description: 验证码
+        type: string
+      meta:
+        $ref: '#/definitions/model.RequestMeta'
+        description: 忽略
+      tel:
+        description: 手机号
+        type: string
+    type: object
+  passport.WxLoginReq:
+    properties:
+      code:
+        description: 微信登陆的code
+        type: string
+      meta:
+        $ref: '#/definitions/model.RequestMeta'
+        description: 忽略
+    type: object
+  ret.StringResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      str:
+        type: string
+    type: object
+  stream.AudioMsg:
+    properties:
+      duration:
+        description: 音频时长，毫秒为单位
+        type: integer
+      src_url:
+        description: 音频地址
+        type: string
+    type: object
+  stream.CommandMsg:
+    properties:
+      content:
+        description: 请求附带的内容信息
+        type: string
+      extra:
+        description: 额外附带的信息，有可能提供前端，或者自己使用
+        type: string
+      noise:
+        description: 是否需要震动/声音
+        type: boolean
+      operator_id:
+        description: 操作者,是谁操作的这个事儿
+        type: integer
+      recver_id:
+        description: 接受者,谁来接受的这个事儿
+        type: integer
+      t:
+        description: 命令的枚举
+        type: integer
+    type: object
+  stream.GiftMsg:
+    properties:
+      gift:
+        $ref: '#/definitions/model.Gift'
+        description: 礼物对象
+      is_horse_lamp:
+        description: 是否显示跑马灯,即弹窗效果，很酷炫的这种
+        type: boolean
+    type: object
+  stream.HintMsg:
+    properties:
+      content:
+        description: 消息内容
+        type: string
+      t:
+        description: 通知消息的枚举
+        type: integer
+    type: object
+  stream.LocationMsg:
+    properties:
+      cover_url:
+        description: 封面图
+        type: string
+      desc:
+        description: 描述信息
+        type: string
+      lat:
+        description: 纬度
+        type: string
+      lng:
+        description: 经度
+        type: string
+    type: object
+  stream.MsgModel:
+    properties:
+      audio:
+        $ref: '#/definitions/stream.AudioMsg'
+        description: 音频消息
+      chat_id:
+        description: 会话id
+        type: string
+      chat_type:
+        description: 会话类型,1单聊，2群聊，3聊天室
+        type: integer
+      command:
+        $ref: '#/definitions/stream.CommandMsg'
+        description: 命令类型的消息
+      created_on:
+        description: 创建时间
+        type: integer
+      device:
+        description: 发送的设备
+        type: integer
+      gift:
+        $ref: '#/definitions/stream.GiftMsg'
+        description: 礼物消息，送礼物的消息
+      hint:
+        $ref: '#/definitions/stream.HintMsg'
+        description: 显示在中间的提示类型消息
+      location:
+        $ref: '#/definitions/stream.LocationMsg'
+        description: 地理位置消息
+      msg_id:
+        description: C端忽略
+        type: integer
+      msg_type:
+        description: 消息类型
+        type: integer
+      pic:
+        $ref: '#/definitions/stream.PicMsg'
+        description: 图片消息
+      recv_id:
+        description: 接受者id
+        type: integer
+      revert:
+        $ref: '#/definitions/stream.RevertMsg'
+        description: 其他的额外附带消息
+      sender_id:
+        description: C端忽略
+        type: integer
+      status:
+        description: 消息状态
+        type: integer
+      text:
+        $ref: '#/definitions/stream.TextMsg'
+        description: |-
+          oneof data {
+          文本消息
+      video:
+        $ref: '#/definitions/stream.VideoMsg'
+        description: 视频消息
+    type: object
+  stream.PicMsg:
+    properties:
+      cover_url:
+        description: 缩略图地址
+        type: string
+      height:
+        description: 图片宽高
+        type: integer
+      src_url:
+        description: 原图地址
+        type: string
+      width:
+        type: integer
+    type: object
+  stream.RevertMsg:
+    properties:
+      content:
+        type: string
+      msg_id:
+        type: integer
+      operator_id:
+        description: 操作者id
+        type: integer
+    type: object
+  stream.SysCloseMsg:
+    properties:
+      content:
+        description: 附带信息
+        type: string
+      operator_id:
+        description: 操作者,是谁操作的这个事儿
+        type: integer
+      pop:
+        description: need_pop,是否需要弹窗
+        type: boolean
+      recver_id:
+        description: 接受者,谁来接受的这个事儿
+        type: integer
+    type: object
+  stream.SysCommandMsg:
+    properties:
+      content:
+        description: 请求附带的内容信息
+        type: string
+      extra:
+        description: 额外附带的信息，有可能提供前端，或者自己使用
+        type: string
+      noise:
+        description: 是否触发震动/声音
+        type: boolean
+      operator_id:
+        description: 操作者,是谁操作的这个事儿
+        type: integer
+      recver_id:
+        description: 接受者,谁来接受的这个事儿
+        type: integer
+      t:
+        type: integer
+    type: object
+  stream.SysLinkMsg:
+    properties:
+      cover_url:
+        description: 封面图
+        type: string
+      desc:
+        description: 简单描述
+        type: string
+      url:
+        type: string
+    type: object
+  stream.SysMsgModel:
+    properties:
+      close:
+        $ref: '#/definitions/stream.SysCloseMsg'
+      command:
+        $ref: '#/definitions/stream.SysCommandMsg'
+        description: 指令消息
+      created_on:
+        description: 创建时间
+        type: integer
+      link:
+        $ref: '#/definitions/stream.SysLinkMsg'
+      msg_id:
+        description: 消息id
+        type: integer
+      msg_type:
+        description: 消息类型
+        type: integer
+      need_push:
+        description: 是否需要发送push消息
+        type: boolean
+      need_save:
+        description: 是否需要存储
+        type: boolean
+      pop:
+        $ref: '#/definitions/stream.SysPopMsg'
+        description: 弹窗消息
+      recver_id:
+        description: 接收条件,0就是所有人都接收
+        type: integer
+      send_on:
+        description: 系统消息的发送时间
+        type: integer
+      sender_id:
+        description: 发送者id,0就是系统发送的
+        type: integer
+      status:
+        description: 撤回消息
+        type: integer
+      text:
+        $ref: '#/definitions/stream.SysTextMsg'
+        description: |-
+          消息体
+          不用one-of的原因是json无法解析了
+          oneof data {
+          文本消息
+    type: object
+  stream.SysPopMsg:
+    properties:
+      can_close:
+        description: 是否可以手动关闭
+        type: boolean
+      content:
+        type: string
+      duration:
+        description: 弹窗出现多长时间
+        type: integer
+      start_at:
+        description: 弹窗开始时间
+        type: integer
+    type: object
+  stream.SysTextMsg:
+    properties:
+      content:
+        description: 富文本消息
+        type: string
+      cover_url:
+        description: 封面图
+        type: string
+    type: object
+  stream.TextMsg:
+    properties:
+      at_uids:
+        description: '@的用户'
+        items:
+          type: integer
+        type: array
+      content:
+        description: 消息内容
+        type: string
+    type: object
+  stream.VideoMsg:
+    properties:
+      cover_url:
+        description: 封面图地址
+        type: string
+      duration:
+        description: 视频时长，毫秒为单位
+        type: integer
+      height:
+        description: 图片宽高
+        type: integer
+      src_url:
+        description: 视频地址
+        type: string
+      width:
+        type: integer
+    type: object
+  user.FriendByIdsResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      items:
+        items:
+          $ref: '#/definitions/user.FriendItem'
+        type: array
+    type: object
+  user.FriendDelReq:
+    properties:
+      friend_id:
+        description: 好友id
+        type: integer
+      user_id:
+        description: 忽略
+        type: integer
+    type: object
+  user.FriendIdsResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      ids:
+        items:
+          type: integer
+        type: array
+    type: object
+  user.FriendItem:
+    properties:
+      friend_time:
+        type: integer
+      mark_name:
+        type: string
+      user:
+        $ref: '#/definitions/user.UserInfo'
+      user_id:
+        type: integer
+    type: object
+  user.FriendMarknameUpdateReq:
+    properties:
+      friend_id:
+        description: 好友id
+        type: integer
+      name:
+        description: 备注姓名
+        type: string
+      user_id:
+        description: 用户id
+        type: integer
+    type: object
+  user.FriendNewAgreeReq:
+    properties:
+      friend_id:
+        description: 好友id
+        type: integer
+      user_id:
+        description: 忽略，不用传
+        type: integer
+    type: object
+  user.FriendNewApplyReq:
+    properties:
+      friend_id:
+        description: 好友id
+        type: integer
+      reason:
+        description: 备注
+        type: string
+      user_id:
+        description: 忽略不用传
+        type: integer
+    type: object
+  user.FriendNewDelReq:
+    properties:
+      id:
+        description: 返回的列表id
+        type: integer
+      user_id:
+        description: 忽略，不用传
+        type: integer
+    type: object
+  user.FriendNewIgnoreReq:
+    properties:
+      friend_id:
+        description: 好友id
+        type: integer
+      user_id:
+        description: 忽略，不用传
+        type: integer
+    type: object
+  user.FriendNewRejectReq:
+    properties:
+      friend_id:
+        description: 好友id
+        type: integer
+      reason:
+        description: 拒绝理由
+        type: string
+      user_id:
+        description: 忽略，不用传
+        type: integer
+    type: object
+  user.FriendsByUidResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      items:
+        description: 好友 列表
+        items:
+          $ref: '#/definitions/user.FriendItem'
+        type: array
+      total:
+        description: 总好友数
+        type: integer
+    type: object
+  user.GroupAppointManagerReq:
+    properties:
+      group_id:
+        description: 群组id
+        type: integer
+      is_appoint:
+        description: true指定，false取消
+        type: boolean
+      manager_ids:
+        description: 所有的用户id
+        items:
+          type: integer
+        type: array
+      user_id:
+        description: 忽略，不用传
+        type: integer
+    type: object
+  user.GroupBlockReq:
+    properties:
+      group_id:
+        type: integer
+      is_block:
+        type: boolean
+      member_id:
+        description: 拉黑的用户
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  user.GroupCreateReq:
+    properties:
+      avatar:
+        description: 头像
+        type: string
+      max_member_ct:
+        description: 总的人数
+        type: integer
+      member_ids:
+        description: 添加的群id
+        items:
+          type: integer
+        type: array
+      name:
+        description: 名称
+        type: string
+      t:
+        description: 会话类型,1单聊，2群聊，3聊天室
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  user.GroupDismissReq:
+    properties:
+      group_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  user.GroupInfo:
+    properties:
+      avatars:
+        items:
+          type: string
+        type: array
+      created_on:
+        type: integer
+      current_ct:
+        type: integer
+      deleted_on:
+        type: integer
+      id:
+        type: integer
+      join_type:
+        type: integer
+      max_member_ct:
+        type: integer
+      mute_util:
+        type: integer
+      name:
+        type: string
+      notice:
+        type: string
+    type: object
+  user.GroupInfoResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      info:
+        $ref: '#/definitions/user.GroupInfo'
+    type: object
+  user.GroupJoinAgreeReq:
+    properties:
+      group_id:
+        type: integer
+      member_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  user.GroupJoinIgnoreReq:
+    properties:
+      group_id:
+        type: integer
+      member_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  user.GroupJoinRejectReq:
+    properties:
+      group_id:
+        type: integer
+      member_id:
+        type: integer
+      reason:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  user.GroupJoinReq:
+    properties:
+      group_id:
+        type: integer
+      reason:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  user.GroupLeaveReq:
+    properties:
+      group_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  user.GroupManagerListResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      members:
+        items:
+          $ref: '#/definitions/user.GroupMember'
+        type: array
+    type: object
+  user.GroupMember:
+    properties:
+      created_on:
+        type: integer
+      is_blocked:
+        type: boolean
+      mark_name:
+        type: string
+      mute_until:
+        type: integer
+      not_disturb:
+        type: boolean
+      role_type:
+        type: integer
+      user:
+        $ref: '#/definitions/user.UserInfo'
+      user_id:
+        type: integer
+    type: object
+  user.GroupMemberAddReq:
+    properties:
+      group_id:
+        type: integer
+      member_ids:
+        items:
+          type: integer
+        type: array
+      user_id:
+        type: integer
+    type: object
+  user.GroupMemberByIdsResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      members:
+        items:
+          $ref: '#/definitions/user.GroupMember'
+        type: array
+    type: object
+  user.GroupMemberDelReq:
+    properties:
+      group_id:
+        type: integer
+      member_ids:
+        items:
+          type: integer
+        type: array
+      user_id:
+        type: integer
+    type: object
+  user.GroupMemberIdsResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      ids:
+        items:
+          type: integer
+        type: array
+    type: object
+  user.GroupMuteListResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      members:
+        items:
+          $ref: '#/definitions/user.GroupMember'
+        type: array
+    type: object
+  user.GroupMuteReq:
+    properties:
+      group_id:
+        type: integer
+      mute_until:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  user.GroupMuteUserReq:
+    properties:
+      group_id:
+        type: integer
+      member_id:
+        items:
+          type: integer
+        type: array
+      mute_until:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  user.GroupTransferReq:
+    properties:
+      group_id:
+        type: integer
+      member_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  user.GroupUpdateAvatarReq:
+    properties:
+      avatar:
+        type: string
+      group_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  user.GroupUpdateJoinTypeReq:
+    properties:
+      group_id:
+        type: integer
+      join_type:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  user.GroupUpdateNameReq:
+    properties:
+      group_id:
+        type: integer
+      name:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  user.GroupUpdateNoticeReq:
+    properties:
+      group_id:
+        type: integer
+      notice:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  user.GroupsByUidResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      infos:
+        items:
+          $ref: '#/definitions/user.GroupInfo'
+        type: array
+      total:
+        type: integer
+    type: object
+  user.InfoResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      user:
+        $ref: '#/definitions/user.UserInfo'
+    type: object
+  user.NewApplyListResp:
+    properties:
+      err:
+        $ref: '#/definitions/errmsg.ErrMsg'
+      items:
+        items:
+          $ref: '#/definitions/user.NewItem'
+        type: array
+      total:
+        type: integer
+    type: object
+  user.NewItem:
+    properties:
+      apply_id:
+        description: 申请人的id
+        type: integer
+      apply_type:
+        description: 申请类型，群组还是用户，0用户，1群组
+        type: integer
+      apply_user:
+        $ref: '#/definitions/user.UserInfo'
+        description: 申请用户
+      created_on:
+        description: 创建时间
+        type: integer
+      ct:
+        description: 申请的次数
+        type: integer
+      id:
+        description: id
+        type: integer
+      ignore:
+        description: 申请是否被忽略
+        type: boolean
+      operator_id:
+        description: 操作用户id
+        type: integer
+      operator_reason:
+        description: 操作原因
+        type: string
+      operator_user:
+        $ref: '#/definitions/user.UserInfo'
+        description: 操作者
+      reason:
+        description: 申请原因
+        type: string
+      recv_group:
+        $ref: '#/definitions/user.GroupInfo'
+        description: 接收的人，如果apply_type是群组，才会有
+      recv_user:
+        $ref: '#/definitions/user.UserInfo'
+        description: 接收的人，如果apply_type是用户，才会有
+      recver_id:
+        description: 接收群组/人的id
+        type: integer
+      status:
+        description: 申请状态，1成功，2失败
+        type: integer
+      updated_on:
+        description: 更新时间
+        type: integer
+    type: object
+  user.UpdateReq:
+    properties:
+      add_friend_type:
+        description: 添加好友的类型
+        type: integer
+      avatar:
+        description: 用户头像
+        type: string
+      birthday:
+        description: 生日
+        type: integer
+      brief:
+        description: 简介
+        type: string
+      gender:
+        description: 性别
+        type: integer
+      name:
+        description: 用户名称
+        type: string
+      user_id:
+        description: 忽略，不用传 用户id
+        type: integer
+    type: object
+  user.UserInfo:
+    properties:
+      add_friend_type:
+        description: 添加好友的方式
+        type: integer
+      avatar:
+        description: 用户头像
+        type: string
+      birthday:
+        description: 生日
+        type: integer
+      brief:
+        description: 简介
+        type: string
+      gender:
+        description: 性别
+        type: integer
+      name:
+        description: 用户名称
+        type: string
+      user_id:
+        description: 用户id
+        type: integer
+    type: object
+info:
+  contact: {}
+  description: 棋友平台
+  title: 棋友平台
+  version: "1.0"
+paths:
+  /chat/ahead:
+    post:
+      consumes:
+      - application/json
+      description: 会话置顶
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/msg.ChatAheadReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 会话置顶
+      tags:
+      - chat
+  /chat/by-ids:
+    get:
+      consumes:
+      - application/json
+      description: 通过会话id获取会话
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 需要查看的id列表,逗号分割所有的id,例如:1234,12511,1100
+        in: query
+        name: ids
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/msg.ChatByIdsResp'
+      summary: 通过会话id获取会话
+      tags:
+      - chat
+  /chat/ids:
+    get:
+      consumes:
+      - application/json
+      description: 会话的id列表,因为会话是个经常变化的属性，所以每次进入app，只需要拉取会话id，跟本地对比
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/msg.ChatIdsResp'
+      summary: 会话的id列表
+      tags:
+      - chat
+  /chat/list:
+    get:
+      consumes:
+      - application/json
+      description: 查看自己的会话列表
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 总页数，从0开始
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页数量，默认200条
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/msg.ChatByUidsResp'
+      summary: 查看自己的会话列表
+      tags:
+      - chat
+  /chat/mark-read:
+    post:
+      consumes:
+      - application/json
+      description: 标记会话已读
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/msg.MarkChatReadReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 标记会话已读
+      tags:
+      - chat
+  /chat/mute:
+    post:
+      consumes:
+      - application/json
+      description: 会话免打扰
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/msg.ChatMuteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 会话免打扰
+      tags:
+      - chat
+  /chat/record/by-ids:
+    get:
+      consumes:
+      - application/json
+      description: 通过聊天记录id查找聊天记录
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 会话id
+        in: query
+        name: chat_id
+        required: true
+        type: string
+      - description: 需要查看的id列表,逗号分割所有的id,例如:1234,12511,1100
+        in: query
+        name: ids
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/msg.ChatRecordByIdsResp'
+      summary: 通过聊天记录id查找聊天记录
+      tags:
+      - chat
+  /chat/record/ids:
+    get:
+      consumes:
+      - application/json
+      description: 查找聊天记录id
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 会话id
+        in: query
+        name: chat_id
+        required: true
+        type: string
+      - description: 总页数，从0开始
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页数量，默认200条
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/msg.ChatRecordIdsResp'
+      summary: 查找聊天记录id
+      tags:
+      - chat
+  /chat/remove:
+    post:
+      consumes:
+      - application/json
+      description: 移除会话
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/msg.ChatRemoveReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 移除会话
+      tags:
+      - chat
+  /chat/touch:
+    post:
+      consumes:
+      - application/json
+      description: 创建会话
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/msg.ChatTouchReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 创建会话
+      tags:
+      - chat
+  /file/locations:
+    get:
+      consumes:
+      - application/json
+      description: 获取省市
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/file.GetProvinceAndCityResp'
+      summary: 获取省市
+      tags:
+      - file
+  /file/sys/avatars:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有系统头像
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/file.GetSysAvatarsResp'
+      summary: 获取所有系统头像
+      tags:
+      - file
+  /friend/by-ids:
+    get:
+      consumes:
+      - application/json
+      description: 通过好友id，获取好友信息
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 需要查看的id列表,逗号分割所有的id,例如:1234,12511,1100
+        in: query
+        name: ids
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/user.FriendByIdsResp'
+      summary: 通过好友id，获取好友信息
+      tags:
+      - friend
+  /friend/del:
+    post:
+      consumes:
+      - application/json
+      description: 删除好友
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.FriendDelReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 删除好友
+      tags:
+      - friend
+  /friend/list:
+    get:
+      consumes:
+      - application/json
+      description: 获取自己的好友列表
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 总页数，从0开始
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页数量，默认30条
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/user.FriendsByUidResp'
+      summary: 获取自己的好友列表
+      tags:
+      - friend
+  /friend/mark-name:
+    post:
+      consumes:
+      - application/json
+      description: 更新备注名称
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.FriendMarknameUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 更新备注名称
+      tags:
+      - friend
+  /friend/new/agree:
+    post:
+      consumes:
+      - application/json
+      description: 同意添加好友
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.FriendNewAgreeReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 同意添加好友
+      tags:
+      - friend
+  /friend/new/apply:
+    post:
+      consumes:
+      - application/json
+      description: 申请添加新好友
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.FriendNewApplyReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 申请添加新好友
+      tags:
+      - friend
+  /friend/new/apply/list:
+    get:
+      consumes:
+      - application/json
+      description: 新的朋友&群组列表
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 总页数，从0开始
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页数量，默认30条
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/user.NewApplyListResp'
+      summary: 新的朋友&群组列表
+      tags:
+      - friend
+  /friend/new/del:
+    post:
+      consumes:
+      - application/json
+      description: 删除新好友列表的其中一个内容
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.FriendNewDelReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 删除新好友列表
+      tags:
+      - friend
+  /friend/new/ignore:
+    post:
+      consumes:
+      - application/json
+      description: 忽略这个好友的申请
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.FriendNewIgnoreReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 忽略这个好友
+      tags:
+      - friend
+  /friend/new/reject:
+    post:
+      consumes:
+      - application/json
+      description: 拒绝添加好友
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.FriendNewRejectReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 拒绝添加好友
+      tags:
+      - friend
+  /group/appoint/manager:
+    post:
+      consumes:
+      - application/json
+      description: 群主指定管理员
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupAppointManagerReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 群主指定管理员
+      tags:
+      - group
+  /group/block:
+    post:
+      consumes:
+      - application/json
+      description: 拉黑某个人
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupBlockReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 拉黑某个人
+      tags:
+      - group
+  /group/create:
+    post:
+      consumes:
+      - application/json
+      description: 创建群组
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupCreateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 创建群组
+      tags:
+      - group
+  /group/dismiss:
+    post:
+      consumes:
+      - application/json
+      description: 解散群组
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupDismissReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 解散群组
+      tags:
+      - group
+  /group/info:
+    get:
+      consumes:
+      - application/json
+      description: 通过id查询一个群组
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 群组id
+        in: query
+        name: group_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/user.GroupInfoResp'
+      summary: 通过id查询群组
+      tags:
+      - group
+  /group/infos:
+    get:
+      consumes:
+      - application/json
+      description: 通过id查询多个群组
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 需要查看的id列表,逗号分割所有的id,例如:1234,12511,1100
+        in: query
+        name: group_ids
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/user.GroupInfoResp'
+      summary: 通过id查询群组列表
+      tags:
+      - group
+  /group/join/agree:
+    post:
+      consumes:
+      - application/json
+      description: 同意申请加入群组
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupJoinAgreeReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 同意申请加入群组
+      tags:
+      - group
+  /group/join/apply:
+    post:
+      consumes:
+      - application/json
+      description: 申请加入群组
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupJoinReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 申请加入群组
+      tags:
+      - group
+  /group/join/ignore:
+    post:
+      consumes:
+      - application/json
+      description: 忽略申请加入群组
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupJoinIgnoreReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 忽略申请加入群组
+      tags:
+      - group
+  /group/join/reject:
+    post:
+      consumes:
+      - application/json
+      description: 拒绝申请加入群组
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupJoinRejectReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 拒绝申请加入群组
+      tags:
+      - group
+  /group/leave:
+    post:
+      consumes:
+      - application/json
+      description: 离开群组
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupLeaveReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 离开群组
+      tags:
+      - group
+  /group/managers:
+    get:
+      consumes:
+      - application/json
+      description: 群组管理员列表
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 群组id
+        in: query
+        name: group_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/user.GroupManagerListResp'
+      summary: 群组管理员列表
+      tags:
+      - group
+  /group/member/add:
+    post:
+      consumes:
+      - application/json
+      description: 添加群成员
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupMemberAddReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 添加群成员
+      tags:
+      - group
+  /group/member/by-ids:
+    get:
+      consumes:
+      - application/json
+      description: 通过群组成员id获取成员
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 群组id
+        in: query
+        name: group_id
+        required: true
+        type: integer
+      - description: 需要查看的成员id列表,逗号分割所有的id,例如:1234,12511,1100
+        in: query
+        name: ids
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/user.GroupMemberByIdsResp'
+      summary: 通过群组成员id获取成员
+      tags:
+      - group
+  /group/member/del:
+    post:
+      consumes:
+      - application/json
+      description: 添加群成员
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupMemberDelReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 删除群成员
+      tags:
+      - group
+  /group/member/ids:
+    get:
+      consumes:
+      - application/json
+      description: 获取群组成员id列表
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 群组id
+        in: query
+        name: group_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/user.GroupMemberIdsResp'
+      summary: 获取群组成员id列表
+      tags:
+      - group
+  /group/members:
+    get:
+      consumes:
+      - application/json
+      description: 所在群的群成员
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 群组id
+        in: query
+        name: group_id
+        required: true
+        type: integer
+      - description: 总页数，从0开始
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页数量，默认30条
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/user.GroupMemberIdsResp'
+      summary: 所在群的群成员
+      tags:
+      - group
+  /group/mute:
+    post:
+      consumes:
+      - application/json
+      description: 群组禁言
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupMuteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 群组禁言
+      tags:
+      - group
+  /group/mute/list:
+    get:
+      consumes:
+      - application/json
+      description: 禁言列表
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 群组id
+        in: query
+        name: group_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/user.GroupMuteListResp'
+      summary: 禁言列表
+      tags:
+      - group
+  /group/mute/user:
+    post:
+      consumes:
+      - application/json
+      description: 禁言某些人
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupMuteUserReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 禁言某些人
+      tags:
+      - group
+  /group/transfer:
+    post:
+      consumes:
+      - application/json
+      description: 转让群组
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupTransferReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 转让群组
+      tags:
+      - group
+  /group/update/avatar:
+    post:
+      consumes:
+      - application/json
+      description: 更新群头像
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupUpdateAvatarReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 更新群头像
+      tags:
+      - group
+  /group/update/jointype:
+    post:
+      consumes:
+      - application/json
+      description: 修改群加入类型
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupUpdateJoinTypeReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 修改群加入类型
+      tags:
+      - group
+  /group/update/name:
+    post:
+      consumes:
+      - application/json
+      description: 更新群组名称
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupUpdateNameReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 更新群组名称
+      tags:
+      - group
+  /group/update/notice:
+    post:
+      consumes:
+      - application/json
+      description: 更新群通知
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.GroupUpdateNoticeReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 更新群通知
+      tags:
+      - group
+  /msg:
+    post:
+      consumes:
+      - application/json
+      description: 发送消息
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/msg.MsgReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/msg.MsgResp'
+      summary: 发送消息
+      tags:
+      - msg
+  /msg/exchange:
+    post:
+      consumes:
+      - application/json
+      description: 交换消息服务器令牌
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/msg.ExchangeReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 交换消息服务器令牌
+      tags:
+      - msg
+  /msg/revert:
+    post:
+      consumes:
+      - application/json
+      description: 撤回自己的消息
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/msg.RevertSelfMsgReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 撤回自己的消息
+      tags:
+      - msg
+  /msg/revert/by-manager:
+    post:
+      consumes:
+      - application/json
+      description: 管理员撤回消息
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/msg.ManagerChatMsgRevertReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 管理员撤回消息
+      tags:
+      - msg
+  /msg/sys:
+    get:
+      consumes:
+      - application/json
+      description: 得到系统消息
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 总页数，从0开始
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页数量，默认200条
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/msg.GetSysMsgResp'
+      summary: 得到系统消息
+      tags:
+      - msg
+  /passport/login/qq:
+    post:
+      consumes:
+      - application/json
+      description: qq号登陆
+      parameters:
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/passport.QqloginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/passport.LoginResp'
+      summary: qq号登陆
+      tags:
+      - passport
+  /passport/login/sms:
+    post:
+      consumes:
+      - application/json
+      description: 发送登陆短信
+      parameters:
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/passport.SmsReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 发送登陆短信
+      tags:
+      - passport
+  /passport/login/tel:
+    post:
+      consumes:
+      - application/json
+      description: 手机号登陆
+      parameters:
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/passport.TelLoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/passport.LoginResp'
+      summary: 手机号登陆
+      tags:
+      - passport
+  /passport/login/wx:
+    post:
+      consumes:
+      - application/json
+      description: 微信号登陆
+      parameters:
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/passport.WxLoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/passport.LoginResp'
+      summary: 微信号登陆
+      tags:
+      - passport
+  /passport/logout:
+    post:
+      consumes:
+      - application/json
+      description: 登出
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ret.StringResp'
+      summary: 登出
+      tags:
+      - passport
+  /passport/refresh:
+    post:
+      consumes:
+      - application/json
+      description: 刷新token
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/passport.RefreshReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ret.StringResp'
+      summary: 刷新token
+      tags:
+      - passport
+  /proto:
+    get:
+      description: 请用  https://tool.chinaz.com/tools/urlencode.aspx 进行文本的decode
+      parameters:
+      - description: 文件名:stream,errmsg,model
+        in: query
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: resp
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 得到proto文件
+      tags:
+      - common
+  /time:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: resp
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 得到系统时间。
+      tags:
+      - common
+  /user/groups:
+    get:
+      consumes:
+      - application/json
+      description: 个人群组列表
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 总页数，从0开始
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: 每页数量，默认30条
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/user.GroupsByUidResp'
+      summary: 个人群组列表
+      tags:
+      - group
+  /user/info:
+    get:
+      consumes:
+      - application/json
+      description: 查看用户信息
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 需要查看的用户id
+        in: query
+        name: id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/user.InfoResp'
+      summary: 查看用户信息
+      tags:
+      - user
+  /user/lastactive:
+    post:
+      consumes:
+      - application/json
+      description: 用户上次活跃
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 用户上次活跃
+      tags:
+      - user
+  /user/update:
+    post:
+      consumes:
+      - application/json
+      description: 更新用户信息
+      parameters:
+      - description: 校验的header
+        in: header
+        name: x-token
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: entity
+        required: true
+        schema:
+          $ref: '#/definitions/user.UpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求返回
+          schema:
+            $ref: '#/definitions/ginproxy.Resp'
+      summary: 更新用户信息
+      tags:
+      - user
+schemes:
+- http
+swagger: "2.0"

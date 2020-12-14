@@ -1,0 +1,25 @@
+package method
+
+const (
+	MsgMsg                  = "/msg.Msg/Msg"
+	MsgSysMsg               = "/msg.Msg/SysMsg"
+	MsgRevertSelfMsg        = "/msg.Msg/RevertSelfMsg"
+	MsgManagerChatMsgRevert = "/msg.Msg/ManagerChatMsgRevert"
+	MsgGetSysMsg            = "/msg.Msg/GetSysMsg"
+	MsgGetMemberIdByChatId  = "/msg.Msg/GetMemberIdByChatId"
+	MsgUserClosed           = "/msg.Msg/UserClosed"
+	MsgSessConnect          = "/msg.Msg/SessConnect"
+	MsgExchange             = "/msg.Msg/Exchange"
+	MsgCloseWithMsg         = "/msg.Msg/CloseWithMsg"
+	MsgMarkChatRead         = "/msg.Msg/MarkChatRead"
+	MsgChatAhead            = "/msg.Msg/ChatAhead"
+	MsgChatTouch            = "/msg.Msg/ChatTouch"
+	MsgChatRemove           = "/msg.Msg/ChatRemove"
+	MsgChatClear            = "/msg.Msg/ChatClear"
+	MsgChatByUids           = "/msg.Msg/ChatByUids"
+	MsgChatIds              = "/msg.Msg/ChatIds"
+	MsgChatByIds            = "/msg.Msg/ChatByIds"
+	MsgChatRecordIds        = "/msg.Msg/ChatRecordIds"
+	MsgChatRecordByIds      = "/msg.Msg/ChatRecordByIds"
+	MsgChatMute             = "/msg.Msg/ChatMute"
+)
