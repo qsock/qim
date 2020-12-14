@@ -1,0 +1,1 @@
+use https://github.com/kakuilan/china_area_mysql.git
